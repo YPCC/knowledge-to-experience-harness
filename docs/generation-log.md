@@ -33,3 +33,15 @@ Records each major run of the Knowledge-to-Experience Harness.
   - Platform README added; designed to be generic for GitHub, PowerPoint, papers, docs, etc.
 - **Notes**: Chat is currently a simulated grounded placeholder ready for real transcript search + Grok integration. Sample videos include the harness overview and CMS placeholders.
 - **Next**: Generate actual CMS videos, wire metadata loading, connect chat, add PowerPoint/doc ingestion path.
+
+## 2026-11-06 — CMS Videos + Ingestion + Chat + YouTube Notes
+
+- **Source**: https://github.com/YPCC/cms-policy-as-code
+- **Outputs**:
+  - `cms_policy_overview_v1.mp4` (~59s) + narration + metadata + transcript
+  - `cms_policy_business_v1.mp4` (~47s) + narration + metadata + transcript
+  - Wired both into React platform with real video URLs and full transcripts
+- **Chat upgrade**: Real client-side transcript search that clearly labels **Grounded in this video** vs **external exploration**.
+- **Ingestion**: Added `docs/ingestion-path.md` covering PDF, DOCX, PPTX, video, text, web — generic for any content.
+- **YouTube**: Research notes in `docs/youtube-publish-notes.md` (OAuth, resumable upload, private-by-default for unverified projects, 100/day quota).
+- **Next**: Architecture video, full React source push, live metadata loading from JSON, optional YouTube OAuth stub.
