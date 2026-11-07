@@ -1,0 +1,20 @@
+{
+  "skill": "open-code-review",
+  "test_cases": [
+    {
+      "name": "review_working_tree",
+      "input": "Review my current changes in the knowledge-to-experience-harness repo",
+      "assertions": ["runs ocr review with --audience agent", "uses --background", "groups by severity", "outputs structured report"]
+    },
+    {
+      "name": "review_branch",
+      "input": "Review the feature branch against main for the CMS policy code",
+      "assertions": ["uses --from main --to", "passes business context", "parses JSON output"]
+    },
+    {
+      "name": "full_scan",
+      "input": "Scan the entire platform directory for security and quality issues",
+      "assertions": ["uses ocr scan", "reports critical/high/medium only"]
+    }
+  ]
+}

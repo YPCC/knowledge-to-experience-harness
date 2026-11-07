@@ -1,0 +1,10 @@
+{
+  "skill": "open-code-review",
+  "test_cases": [
+    {"input": "review the code changes", "should_trigger": true},
+    {"input": "run open code review on this repo", "should_trigger": true},
+    {"input": "check the pull request for bugs", "should_trigger": true},
+    {"input": "generate a video script", "should_trigger": false},
+    {"input": "what is the weather", "should_trigger": false}
+  ]
+}
