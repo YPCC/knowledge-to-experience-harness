@@ -101,3 +101,12 @@ Records each major run of the Knowledge-to-Experience Harness.
   - Edited `docs/images/k2e-architecture-diagram.png` to remove the CitiusTech logo from the top-left corner.
   - Replaced the image in the repository so the README embed shows the clean version.
 - **Notes**: Diagram content otherwise unchanged.
+
+## 2026-11-07 — Paper Videos and Interface Demo Added to Repo
+
+- **Source**: Yu et al. Bioengineering 2025 paper on LLM retrieval from clinical Care Pathway Models + harness platform.
+- **Outputs**:
+  - `videos/paper_business_v1.mp4` (~37s)
+  - `videos/paper_technical_v1.mp4` (~44s)
+  - `videos/harness_interface_demo_v1.mp4` (~45s)
+- **Notes**: All three now committed under `videos/` for permanent raw links and potential README embeds.
