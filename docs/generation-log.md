@@ -67,3 +67,12 @@ Records each major run of the Knowledge-to-Experience Harness.
   - Added `docs/grok-integration.md` (grounded vs external chat points).
   - Updated root README: marked all original Next Steps complete, switched platform description to React, reflected CMS source status and current structure.
 - **Notes**: Original next steps from initial README are now done. Harness is ready for next source or production refinements.
+
+## 2026-11-06 — README Example Videos Section
+
+- **Actions**:
+  - Updated root README with a dedicated **Example Videos** section.
+  - First showcases the harness meta-overview video (`k2e_harness_overview_v1.mp4`).
+  - Then lists the full CMS Policy-as-Code series generated from the other repository, with lengths and focus.
+  - Notes that all videos are in `artifacts/` and loadable via the React platform.
+- **Notes**: README now clearly demonstrates both the harness explaining itself and concrete output from a real source repo.
