@@ -86,3 +86,11 @@ Records each major run of the Knowledge-to-Experience Harness.
     - CMS overview, business, architecture, and how-it-works videos
   - Updated repository structure note to include `videos/`.
 - **Notes**: Videos now play inline in the README on GitHub and are available as permanent raw links.
+
+## 2026-11-06 — Open Code Review Skill
+
+- **Actions**:
+  - Created `skills/open-code-review/` following skill-creator structure (SKILL.md, CHANGELOG.md, evals/).
+  - Adapted the official alibaba/open-code-review skill for use with any Git repository (harness, CMS source, platform, external repos).
+  - Documented in root README with install/usage notes and added to repository structure.
+- **Notes**: Enables line-level AI code review with severity grouping. Complements the evaluation framework.
