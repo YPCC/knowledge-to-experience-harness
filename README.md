@@ -9,6 +9,12 @@ It turns source material — GitHub repositories, papers, documents, PowerPoint,
 
 Inspired by enterprise agent harness concepts (e.g., CitiusTech-style Knowledge-to-Experience diagrams) and modern agentic pipelines.
 
+## See the Interface in Action
+
+[![Watch the video](https://raw.githubusercontent.com/YPCC/knowledge-to-experience-harness/main/docs/images/harness_interface_thumbnail.jpg)](https://raw.githubusercontent.com/YPCC/knowledge-to-experience-harness/main/videos/harness_interface_demo_v1.mp4)
+
+Watch the ~45-second demo of the React mini-platform (search, tags, player + transcript, grounded chat) using the clinical pathways paper as the source example.
+
 ## Architecture
 
 ![Knowledge-to-Experience Agent Harness Architecture](docs/images/k2e-architecture-diagram.png)
@@ -104,7 +110,7 @@ Additional specialized videos have been generated for the first real source (CMS
 /
 ├── README.md
 ├── docs/
-│   ├── images/                 # Architecture diagrams
+│   ├── images/                 # Architecture diagrams and thumbnails
 │   ├── skills/                  # Reusable skill documents
 │   │   ├── voice.md
 │   │   ├── visual-style.md
@@ -137,7 +143,7 @@ Additional specialized videos have been generated for the first real source (CMS
 - [x] Evaluation framework for clarity and technical accuracy.
 - [x] Add open-code-review skill for reviewing any code repository.
 
-**Current status**: Harness is operational. Architecture diagram embedded. Harness overview + four CMS videos generated and embedded. Open Code Review skill added for quality checks on any repo. Ready for next source or deeper motion/Manim upgrades.
+**Current status**: Harness is operational. Architecture diagram embedded. Interface demo video embedded with thumbnail. Harness overview + four CMS videos generated and embedded. Open Code Review skill added for quality checks on any repo. Ready for next source or deeper motion/Manim upgrades.
 
 ## Tech Notes
 
