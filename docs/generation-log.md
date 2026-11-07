@@ -76,3 +76,13 @@ Records each major run of the Knowledge-to-Experience Harness.
   - Then lists the full CMS Policy-as-Code series generated from the other repository, with lengths and focus.
   - Notes that all videos are in `artifacts/` and loadable via the React platform.
 - **Notes**: README now clearly demonstrates both the harness explaining itself and concrete output from a real source repo.
+
+## 2026-11-06 — Embed Example Videos in README
+
+- **Actions**:
+  - Committed the five example MP4s under `videos/` in the repository.
+  - Updated README with HTML `<video>` embeds (using raw GitHub URLs) plus direct download links for:
+    - Harness meta-overview
+    - CMS overview, business, architecture, and how-it-works videos
+  - Updated repository structure note to include `videos/`.
+- **Notes**: Videos now play inline in the README on GitHub and are available as permanent raw links.
