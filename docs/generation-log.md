@@ -58,3 +58,12 @@ Records each major run of the Knowledge-to-Experience Harness.
   - `scripts/ingest_stub.py` — accepts PPTX or PDF, extracts text, emits candidate-video plan JSON.
   - `scripts/youtube_oauth_stub.py` — OAuth consent flow (user supplies `client_secrets.json`); stores token; ready for resumable upload.
 - **Next**: Full React source commit (App.tsx/App.css), live video serving, optional Manim motion upgrade, real Grok chat backend.
+
+## 2026-11-06 — Skills, Evaluation Framework & README Update
+
+- **Actions**:
+  - Fleshed out skill documents: `docs/skills/voice.md`, `docs/skills/tagging.md` (visual-style.md already present).
+  - Added `docs/evaluation-framework.md` (clarity + technical accuracy checks).
+  - Added `docs/grok-integration.md` (grounded vs external chat points).
+  - Updated root README: marked all original Next Steps complete, switched platform description to React, reflected CMS source status and current structure.
+- **Notes**: Original next steps from initial README are now done. Harness is ready for next source or production refinements.
