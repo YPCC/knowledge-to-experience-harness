@@ -5,7 +5,7 @@
 One Platform. Many Knowledge Elements. Greater Impact.
 
 This repository is the open starting point for a reusable, modular **Knowledge-to-Experience (K2E) Agent Harness**.
-It turns source material — primarily GitHub repositories, papers, documents, or videos — into polished short educational/demo videos (1–2 minutes, in the spirit of 3Blue1Brown), rich metadata, tags, and an interactive consumption experience with grounded chat.
+It turns source material — GitHub repositories, papers, documents, PowerPoint, or videos — into polished short educational/demo videos (1–2 minutes, in the spirit of 3Blue1Brown), rich metadata, tags, and an interactive consumption experience with grounded chat.
 
 Inspired by enterprise agent harness concepts (e.g., CitiusTech-style Knowledge-to-Experience diagrams) and modern agentic pipelines.
 
@@ -19,23 +19,23 @@ Inspired by enterprise agent harness concepts (e.g., CitiusTech-style Knowledge-
 
 ## Core Pipeline
 
-1. **Source Ingestion** — GitHub repo / video URL / paper / docs → structured summary + candidate video topics.
+1. **Source Ingestion** — GitHub repo / video URL / paper / docs / PPTX / PDF → structured summary + candidate video topics.
 2. **Video Generation** — Scripts (overview, deep-dive, dialogue, short explainer, how-it-works) → multi-speaker voice → visuals + ffmpeg assembly → MP4 + MP3 + timestamped transcript.
 3. **Tagging & Metadata** — Manual + AI tags, short description, key timestamps, concept links, JSON metadata record. Provenance tracked (source commit/URL, prompts, settings).
 4. **Chat Interface** — Grounded Q&A over transcripts (jump to timestamps, cite source sections). Separate concept-exploration chat that can browse the web.
-5. **Consumption Platform** — Lightweight filterable video browser (search, tags, playlists, related). Playback + transcript + chat side-by-side. Starts as Streamlit/Gradio; can grow or publish to YouTube.
+5. **Consumption Platform** — Professional React (Vite + TypeScript) filterable video browser (search, tags). Playback + transcript + grounded chat side-by-side. Can grow or publish to YouTube.
 
 ## Short Plan — First Batch of Videos (Meta: Explaining the Harness Itself)
 
-| # | Title | Type | Length | Focus |
-|---|-------|------|--------|-------|
-| 1 | What is the Knowledge-to-Experience Harness? | Overview | 60–90s | High-level value, inputs → outputs |
-| 2 | Inside the Agent Harness (C4 Level 2) | Technical deep-dive | 90–120s | Planning loop, ingestion, generation, chat, evaluation |
-| 3 | From GitHub Repo to 90-Second Explainer | How-it-works | 60–90s | End-to-end walkthrough on a sample public repo |
-| 4 | Grounded Chat + Mini YouTube | Demo | 60s | Searching, timestamp jumps, Grok-style interaction |
-| 5 | 3Blue1Brown-Style Visual Principles | Style guide | 60s | Clarity, visual metaphor, progressive disclosure |
+| # | Title | Type | Length | Focus | Status |
+|---|-------|------|--------|-------|--------|
+| 1 | What is the Knowledge-to-Experience Harness? | Overview | 60–90s | High-level value, inputs → outputs | Generated |
+| 2 | Inside the Agent Harness (C4 Level 2) | Technical deep-dive | 90–120s | Planning loop, ingestion, generation, chat, evaluation | Planned |
+| 3 | From GitHub Repo to 90-Second Explainer | How-it-works | 60–90s | End-to-end walkthrough on a sample public repo | Planned |
+| 4 | Grounded Chat + Mini YouTube | Demo | 60s | Searching, timestamp jumps, Grok-style interaction | Platform live |
+| 5 | 3Blue1Brown-Style Visual Principles | Style guide | 60s | Clarity, visual metaphor, progressive disclosure | Skill doc ready |
 
-Additional specialized videos will be generated per source (business aspect + technical aspect).
+Additional specialized videos have been generated for the first real source (CMS Policy-as-Code).
 
 ## Operating Principles
 
@@ -51,34 +51,42 @@ Additional specialized videos will be generated per source (business aspect + te
 /
 ├── README.md
 ├── docs/
-│   ├── architecture.md          # C4 diagrams & notes
 │   ├── skills/                  # Reusable skill documents
 │   │   ├── voice.md
 │   │   ├── visual-style.md
 │   │   └── tagging.md
+│   ├── sources/                 # Per-source plans
+│   ├── ingestion-path.md
+│   ├── evaluation-framework.md
+│   ├── grok-integration.md
+│   ├── youtube-publish-notes.md
 │   └── generation-log.md
-├── examples/
-│   └── sample-source/           # Placeholder for first source
-├── platform/                  # Mini YouTube / Streamlit app (coming)
-├── scripts/                    # Generation scripts & prompts
-└── artifacts/                  # Generated videos, transcripts, metadata (gitignored for large files)
+├── platform/                  # React mini-YouTube (Vite + TS)
+│   ├── public/videos.json        # Static metadata loader
+│   └── src/App.tsx
+├── scripts/                    # Generation & utility stubs
+│   ├── ingest_stub.py            # PPTX/PDF → candidate plan
+│   └── youtube_oauth_stub.py
+└── artifacts/                  # Generated videos, transcripts, metadata (large files gitignored)
 ```
 
-## Next Steps
+## Next Steps (updated)
 
-- [ ] Flesh out skill documents (voice, visual style matching 3B1B clarity).
-- [ ] Implement first ingestion + script generation on a public GitHub source.
-- [ ] Generate sample 60-second overview video.
-- [ ] Scaffold Streamlit mini-platform with transcript search + chat stub.
-- [ ] Research YouTube upload / API and Grok integration points.
-- [ ] Evaluation framework for clarity and technical accuracy.
+- [x] Flesh out skill documents (voice, visual style matching 3B1B clarity, tagging).
+- [x] Implement first ingestion + script generation on a public GitHub source (cms-policy-as-code).
+- [x] Generate sample 60-second overview video (harness + multiple CMS videos).
+- [x] Scaffold professional mini-platform (React/Vite instead of Streamlit) with transcript search + grounded chat.
+- [x] Research YouTube upload / API and Grok integration points.
+- [x] Evaluation framework for clarity and technical accuracy.
+
+**Current status**: Harness is operational. Four CMS videos + harness overview generated and loadable in the React platform via static metadata. Ingestion stub and YouTube OAuth stub available. Ready for next source or deeper motion/Manim upgrades.
 
 ## Tech Notes
 
 - Visuals: slide-based + generated imagery + ffmpeg (Manim-style where feasible).
-- Voice: multi-speaker TTS.
-- Chat: grounded on transcripts + optional external search.
-- Platform: start lightweight (Streamlit), designed to grow or export.
+- Voice: multi-speaker TTS (see docs/skills/voice.md).
+- Chat: grounded on transcripts + optional external search (clearly labeled).
+- Platform: React (Vite + TypeScript) mini-YouTube with search, tags, player, transcript, and chat.
 
 **Knowledge in. Trusted experiences out.**
 
