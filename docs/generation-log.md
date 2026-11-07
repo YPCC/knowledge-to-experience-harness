@@ -45,3 +45,16 @@ Records each major run of the Knowledge-to-Experience Harness.
 - **Ingestion**: Added `docs/ingestion-path.md` covering PDF, DOCX, PPTX, video, text, web — generic for any content.
 - **YouTube**: Research notes in `docs/youtube-publish-notes.md` (OAuth, resumable upload, private-by-default for unverified projects, 100/day quota).
 - **Next**: Architecture video, full React source push, live metadata loading from JSON, optional YouTube OAuth stub.
+
+## 2026-11-06 — Architecture / How-it-works Videos + Full Wiring
+
+- **Source**: https://github.com/YPCC/cms-policy-as-code
+- **Outputs**:
+  - `cms_policy_architecture_v1.mp4` (~53s) — neuro-symbolic pipeline deep-dive
+  - `cms_policy_howitworks_v1.mp4` (~42s) — claim → Decision Trace flow
+  - Matching metadata JSON + transcripts
+- **Platform**: Static metadata loader (`platform/public/videos.json`) + updated App.tsx that fetches it; all four CMS videos + harness overview now loadable.
+- **Stubs**:
+  - `scripts/ingest_stub.py` — accepts PPTX or PDF, extracts text, emits candidate-video plan JSON.
+  - `scripts/youtube_oauth_stub.py` — OAuth consent flow (user supplies `client_secrets.json`); stores token; ready for resumable upload.
+- **Next**: Full React source commit (App.tsx/App.css), live video serving, optional Manim motion upgrade, real Grok chat backend.
