@@ -1,0 +1,76 @@
+[
+  {
+    "id": "k2e-overview-v1",
+    "title": "What is the Knowledge-to-Experience Agent Harness?",
+    "description": "Short overview of the modular agent harness that turns knowledge sources into trusted short educational videos and interactive experiences.",
+    "type": "Overview",
+    "duration": "1:03",
+    "tags": ["agent-harness", "overview", "3blue1brown-style"],
+    "source": "Harness architecture diagram",
+    "videoUrl": "/artifacts/k2e_harness_overview_v1.mp4",
+    "transcript": [
+      {"time": "0:00", "text": "Welcome to the Knowledge-to-Experience Agent Harness."},
+      {"time": "0:08", "text": "Imagine taking a GitHub repository, a research paper, or a set of documents, and turning them into clear, short educational videos."},
+      {"time": "0:22", "text": "At the center is an intelligent agent harness. It ingests knowledge sources and produces searchable videos with grounded chat."}
+    ]
+  },
+  {
+    "id": "cms-overview",
+    "title": "CMS Policy-as-Code: From Unstructured Documents to Auditable Rules",
+    "description": "How the neuro-symbolic engine converts CMS NCD/LCD policies into executable, versioned coverage rules with full Decision Traces.",
+    "type": "Overview",
+    "duration": "0:59",
+    "tags": ["cms", "policy-as-code", "neuro-symbolic", "overview"],
+    "source": "https://github.com/YPCC/cms-policy-as-code",
+    "videoUrl": "/artifacts/cms_policy_overview_v1.mp4",
+    "transcript": [
+      {"time": "0:00", "text": "Healthcare payers face a massive challenge: interpreting thousands of CMS National and Local Coverage Determinations."},
+      {"time": "0:24", "text": "This is why CMS Policy-as-Code exists. It uses a neuro-symbolic approach."},
+      {"time": "0:40", "text": "Then a deterministic rules engine evaluates claims at runtime, producing a full Decision Trace that is fully auditable."}
+    ]
+  },
+  {
+    "id": "cms-business",
+    "title": "Why Policy-as-Code Matters for Healthcare Payers",
+    "description": "The business impact of reducing manual interpretation, denials, and compliance risk through auditable policy-as-code.",
+    "type": "Business",
+    "duration": "0:47",
+    "tags": ["cms", "business", "payers", "compliance"],
+    "source": "https://github.com/YPCC/cms-policy-as-code",
+    "videoUrl": "/artifacts/cms_policy_business_v1.mp4",
+    "transcript": [
+      {"time": "0:00", "text": "For healthcare payers, coverage decisions drive revenue and compliance risk."},
+      {"time": "0:28", "text": "Policy-as-Code changes the equation. Decision Traces show exactly which policy version and which rule produced every yes or no."}
+    ]
+  },
+  {
+    "id": "cms-architecture",
+    "title": "Neuro-Symbolic Architecture Explained",
+    "description": "Deep dive into the neuro-symbolic pipeline: extraction into a versioned Context Graph followed by deterministic rules.",
+    "type": "Technical",
+    "duration": "0:53",
+    "tags": ["cms", "architecture", "neuro-symbolic", "technical"],
+    "source": "https://github.com/YPCC/cms-policy-as-code",
+    "videoUrl": "/artifacts/cms_policy_architecture_v1.mp4",
+    "transcript": [
+      {"time": "0:00", "text": "The architecture is neuro-symbolic by design."},
+      {"time": "0:25", "text": "At runtime, only deterministic rules execute. No language model is involved in the coverage decision."},
+      {"time": "0:32", "text": "The output is an immutable Decision Trace that links the claim facts, the exact graph version, the rules applied, and the final outcome."}
+    ]
+  },
+  {
+    "id": "cms-howitworks",
+    "title": "How a Claim Becomes a Decision Trace",
+    "description": "End-to-end walkthrough of claim evaluation against the Context Graph producing an auditable Decision Trace.",
+    "type": "How-it-works",
+    "duration": "0:42",
+    "tags": ["cms", "how-it-works", "decision-trace"],
+    "source": "https://github.com/YPCC/cms-policy-as-code",
+    "videoUrl": "/artifacts/cms_policy_howitworks_v1.mp4",
+    "transcript": [
+      {"time": "0:00", "text": "Here is how a claim becomes a Decision Trace."},
+      {"time": "0:12", "text": "The engine selects the relevant policy version from the Context Graph based on effective dates and jurisdiction."},
+      {"time": "0:28", "text": "The result is a clear coverage decision plus a full Decision Trace."}
+    ]
+  }
+]
