@@ -94,3 +94,10 @@ Records each major run of the Knowledge-to-Experience Harness.
   - Adapted the official alibaba/open-code-review skill for use with any Git repository (harness, CMS source, platform, external repos).
   - Documented in root README with install/usage notes and added to repository structure.
 - **Notes**: Enables line-level AI code review with severity grouping. Complements the evaluation framework.
+
+## 2026-11-06 — Architecture Diagram Logo Removed
+
+- **Actions**:
+  - Edited `docs/images/k2e-architecture-diagram.png` to remove the CitiusTech logo from the top-left corner.
+  - Replaced the image in the repository so the README embed shows the clean version.
+- **Notes**: Diagram content otherwise unchanged.
