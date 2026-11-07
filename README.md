@@ -25,6 +25,18 @@ Inspired by enterprise agent harness concepts (e.g., CitiusTech-style Knowledge-
 4. **Chat Interface** — Grounded Q&A over transcripts (jump to timestamps, cite source sections). Separate concept-exploration chat that can browse the web.
 5. **Consumption Platform** — Professional React (Vite + TypeScript) filterable video browser (search, tags). Playback + transcript + grounded chat side-by-side. Can grow or publish to YouTube.
 
+## Code Review with Open Code Review
+
+Use the skill at `skills/open-code-review/` to review **any** Git repository (this harness, the CMS source, platform code, or external repos) with [alibaba/open-code-review](https://github.com/alibaba/open-code-review).
+
+- Install: `npm install -g @alibaba-group/open-code-review`
+- Configure LLM once: `ocr config provider` / `ocr config model`
+- Invoke via the skill or directly: `ocr review --audience agent --background "context" --format json`
+- Supports workspace changes, branch diffs, single commits, or full `ocr scan`
+- Groups findings by severity; integrates with the evaluation framework
+
+See `skills/open-code-review/SKILL.md` for the full workflow.
+
 ## Example Videos
 
 ### 1. Knowledge-to-Experience Harness Itself (Meta Overview)
@@ -102,6 +114,8 @@ Additional specialized videos have been generated for the first real source (CMS
 ├── scripts/                    # Generation & utility stubs
 │   ├── ingest_stub.py            # PPTX/PDF → candidate plan
 │   └── youtube_oauth_stub.py
+├── skills/                   # Agent skills (e.g. open-code-review)
+│   └── open-code-review/         # AI code review for any Git repo
 ├── videos/                    # Example generated videos (embedded above)
 └── artifacts/                  # Additional generated files (large files may be gitignored)
 ```
@@ -114,8 +128,9 @@ Additional specialized videos have been generated for the first real source (CMS
 - [x] Scaffold professional mini-platform (React/Vite instead of Streamlit) with transcript search + grounded chat.
 - [x] Research YouTube upload / API and Grok integration points.
 - [x] Evaluation framework for clarity and technical accuracy.
+- [x] Add open-code-review skill for reviewing any code repository.
 
-**Current status**: Harness is operational. Harness overview + four CMS videos generated, committed under `videos/`, and embedded in this README. Loadable in the React platform via static metadata. Ingestion stub and YouTube OAuth stub available. Ready for next source or deeper motion/Manim upgrades.
+**Current status**: Harness is operational. Harness overview + four CMS videos generated and embedded. Open Code Review skill added for quality checks on any repo. Ready for next source or deeper motion/Manim upgrades.
 
 ## Tech Notes
 
@@ -123,6 +138,7 @@ Additional specialized videos have been generated for the first real source (CMS
 - Voice: multi-speaker TTS (see docs/skills/voice.md).
 - Chat: grounded on transcripts + optional external search (clearly labeled).
 - Platform: React (Vite + TypeScript) mini-YouTube with search, tags, player, transcript, and chat.
+- Code review: alibaba/open-code-review via the skill in `skills/open-code-review/`.
 
 **Knowledge in. Trusted experiences out.**
 
