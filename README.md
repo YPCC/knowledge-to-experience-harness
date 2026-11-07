@@ -9,6 +9,12 @@ It turns source material — GitHub repositories, papers, documents, PowerPoint,
 
 Inspired by enterprise agent harness concepts (e.g., CitiusTech-style Knowledge-to-Experience diagrams) and modern agentic pipelines.
 
+## Architecture
+
+![Knowledge-to-Experience Agent Harness Architecture](docs/images/k2e-architecture-diagram.png)
+
+C4-style context and container view of the harness: knowledge sources → agent orchestration (ingest, generate, index, chat, govern, deliver) → experiences (videos, platform, chat). Includes reusable skills, pluggable tools, policy & governance, evaluation, and observability.
+
 ## Why This Exists
 
 - Turn raw technical/business knowledge into consumable, visual, trusted learning experiences.
@@ -98,6 +104,7 @@ Additional specialized videos have been generated for the first real source (CMS
 /
 ├── README.md
 ├── docs/
+│   ├── images/                 # Architecture diagrams
 │   ├── skills/                  # Reusable skill documents
 │   │   ├── voice.md
 │   │   ├── visual-style.md
@@ -130,7 +137,7 @@ Additional specialized videos have been generated for the first real source (CMS
 - [x] Evaluation framework for clarity and technical accuracy.
 - [x] Add open-code-review skill for reviewing any code repository.
 
-**Current status**: Harness is operational. Harness overview + four CMS videos generated and embedded. Open Code Review skill added for quality checks on any repo. Ready for next source or deeper motion/Manim upgrades.
+**Current status**: Harness is operational. Architecture diagram embedded. Harness overview + four CMS videos generated and embedded. Open Code Review skill added for quality checks on any repo. Ready for next source or deeper motion/Manim upgrades.
 
 ## Tech Notes
 
