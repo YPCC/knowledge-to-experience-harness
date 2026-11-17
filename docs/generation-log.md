@@ -110,3 +110,11 @@ Records each major run of the Knowledge-to-Experience Harness.
   - `videos/paper_technical_v1.mp4` (~44s)
   - `videos/harness_interface_demo_v1.mp4` (~45s)
 - **Notes**: All three now committed under `videos/` for permanent raw links and potential README embeds.
+
+## 2026-11-17 — Quick Start Guide Added
+
+- **Actions**:
+  - Created `docs/quick-start.md` with full installation, prerequisites, ingestion options (PDF/PPTX stub, GitHub, documents), platform notes, and a detailed CMS Policy-as-Code series walkthrough.
+  - Updated root README with a concise **Quick Start** section linking to the full guide and highlighting the CMS videos as the repeatable showcase example.
+  - Updated repository structure listing and Next Steps checkbox.
+- **Notes**: Users can now clone, view videos immediately, run `scripts/ingest_stub.py` on their own files, and follow the CMS pattern for any new source.
