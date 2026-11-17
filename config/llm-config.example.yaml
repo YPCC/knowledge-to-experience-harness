@@ -1,0 +1,42 @@
+# Knowledge-to-Experience Harness — LLM Provider Configuration
+# Copy to config/llm-config.yaml (or set K2E_LLM_CONFIG path) and edit.
+# Secrets stay in environment variables / .env — never put real API keys in this file.
+
+# Which provider to use by default.
+# Supported values: gemini | grok | vertex
+default_provider: grok
+
+providers:
+  # Gemini API (Google AI Studio) — uses API key
+  gemini:
+    enabled: true
+    api_key_env: GEMINI_API_KEY          # or GOOGLE_API_KEY
+    model: gemini-2.5-flash
+    # base_url: optional override
+
+  # Grok / xAI API — uses API key
+  grok:
+    enabled: true
+    api_key_env: XAI_API_KEY             # standard name used by xAI SDKs
+    model: grok-4
+    base_url: https://api.x.ai/v1
+
+  # Vertex AI (Gemini on Google Cloud) — uses Application Default Credentials (ADC)
+  # No API key. Authenticate with:
+  #   gcloud auth application-default login
+  # or set GOOGLE_APPLICATION_CREDENTIALS to a service-account JSON.
+  vertex:
+    enabled: true
+    project_env: GOOGLE_CLOUD_PROJECT
+    location_env: GOOGLE_CLOUD_LOCATION
+    location: us-central1                 # fallback if env var not set
+    model: gemini-2.5-flash
+    use_vertexai: true                    # maps to GOOGLE_GENAI_USE_VERTEXAI=true
+
+# Optional: which stages of the harness prefer which provider
+# (script generation, chat, tagging, evaluation, …)
+stages:
+  script_generation: grok
+  grounded_chat: grok
+  tagging: gemini
+  evaluation: vertex
