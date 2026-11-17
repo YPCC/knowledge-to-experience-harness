@@ -118,3 +118,13 @@ Records each major run of the Knowledge-to-Experience Harness.
   - Updated root README with a concise **Quick Start** section linking to the full guide and highlighting the CMS videos as the repeatable showcase example.
   - Updated repository structure listing and Next Steps checkbox.
 - **Notes**: Users can now clone, view videos immediately, run `scripts/ingest_stub.py` on their own files, and follow the CMS pattern for any new source.
+
+## 2026-11-17 — LLM Backend Configuration (Gemini / Grok / Vertex AI ADC)
+
+- **Actions**:
+  - Added `.env.example` with placeholders for `GEMINI_API_KEY`, `XAI_API_KEY`, and Vertex AI settings (`GOOGLE_CLOUD_PROJECT`, `GOOGLE_CLOUD_LOCATION`, `GOOGLE_GENAI_USE_VERTEXAI`).
+  - Added `config/llm-config.example.yaml` for structured provider selection and stage overrides.
+  - Added `docs/llm-configuration.md` with setup instructions, ADC steps (`gcloud auth application-default login` or service account), Python snippets, and security notes.
+  - Added `.gitignore` to protect `.env` and local config.
+  - Updated Quick Start and root README to reference the new configuration.
+- **Notes**: Supports API-key auth for Gemini and Grok, and Application Default Credentials for Vertex AI. No secrets are committed.
