@@ -1,0 +1,26 @@
+# Secrets and local config
+.env
+.env.local
+.env.*.local
+config/llm-config.yaml
+*.pem
+*.key
+service-account*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Node
+node_modules/
+dist/
+.DS_Store
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
