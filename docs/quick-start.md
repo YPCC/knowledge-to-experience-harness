@@ -10,7 +10,7 @@ This guide covers installation, the current modular workflow, and a concrete wal
 - **Python 3.10+** (for ingestion scripts)
 - **Node.js 18+ & npm** (only if you want to run the React mini-platform locally)
 - **ffmpeg** (for video assembly; optional for viewing existing videos)
-- Optional: Grok (or equivalent) access for script generation, narration coordination, and grounded chat
+- Optional LLM access: Gemini API key, Grok (xAI) API key, or Vertex AI via Application Default Credentials
 
 ## 1. Install / Clone the Repository
 
@@ -26,8 +26,27 @@ No global package install is required yet. The harness is currently a modular co
 - Example videos (`videos/`)
 - Metadata and platform scaffolding (`platform/`)
 - Provenance and plans (`docs/`)
+- LLM configuration examples (`.env.example`, `config/llm-config.example.yaml`)
 
-You work with it by combining these pieces with an agent (Grok recommended) that follows the skill documents.
+You work with it by combining these pieces with an agent that follows the skill documents.
+
+## 1b. Configure LLM Backend (Gemini / Grok / Vertex AI)
+
+The harness supports three ways to call language models:
+
+| Provider | Auth method | What you set |
+|----------|-------------|--------------|
+| **Gemini API** | API key | `GEMINI_API_KEY` |
+| **Grok (xAI)** | API key | `XAI_API_KEY` |
+| **Vertex AI** | Application Default Credentials (ADC) | `GOOGLE_CLOUD_PROJECT` + `gcloud auth application-default login` (or service account) |
+
+```bash
+cp .env.example .env
+# edit .env — fill in only the providers you need
+cp config/llm-config.example.yaml config/llm-config.yaml   # optional structured config
+```
+
+Full details, Python snippets, and security notes: **[docs/llm-configuration.md](docs/llm-configuration.md)**.
 
 ## 2. View Existing Videos Immediately
 
@@ -74,7 +93,7 @@ python scripts/ingest_stub.py path/to/your-document.pdf
 python scripts/ingest_stub.py path/to/your-slides.pptx
 ```
 
-This produces a `*.plan.json` with candidate video topics (Overview, Technical, Business, How-it-works). Review and refine the plan, then proceed to script generation using the skill documents.
+This produces a `*.plan.json` with candidate video topics (Overview, Technical, Business, How-it-works). Review and refine the plan, then proceed to script generation using the skill documents (and your configured LLM backend).
 
 ### Option B — GitHub Repository (primary path)
 
@@ -104,7 +123,7 @@ Follow `docs/ingestion-path.md`. Extract text/structure, produce a plan, then ge
 **How this was produced (repeatable pattern)**:
 
 1. Ingest the source repo → concise summary + candidate topics (recorded in the plan file).
-2. Write scripts for each type using the voice and visual-style skills.
+2. Write scripts for each type using the voice and visual-style skills (via your chosen LLM).
 3. Generate narration (multi-speaker when useful) + simple slide visuals.
 4. Assemble with ffmpeg → MP4 + matching transcript with timestamps.
 5. Create metadata entries (see `platform/public/videos.json`) including tags, description, source URL, and transcript snippets.
@@ -119,6 +138,7 @@ Follow `docs/ingestion-path.md`. Extract text/structure, produce a plan, then ge
 
 ## 6. Next Actions After Quick Start
 
+- Configure your LLM backend (see section 1b or `docs/llm-configuration.md`).
 - Review `docs/skills/` and adapt voice/visual style to your brand.
 - Run `scripts/ingest_stub.py` on one of your own PDFs or PPTXs.
 - Generate your first overview video following the CMS pattern.
