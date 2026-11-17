@@ -18,6 +18,12 @@ git clone https://github.com/YPCC/knowledge-to-experience-harness.git
 cd knowledge-to-experience-harness
 ```
 
+- **Configure an LLM backend** (Gemini API key, Grok/xAI key, or Vertex AI via ADC):
+  ```bash
+  cp .env.example .env
+  # edit .env
+  ```
+  See **[docs/llm-configuration.md](docs/llm-configuration.md)**.
 - **View example videos immediately** — open any file in `videos/` or use the embeds below.
 - **Ingest your own PDF or PowerPoint**:
   ```bash
@@ -50,7 +56,7 @@ C4-style context and container view of the harness: knowledge sources → agent 
 - Grounded, traceable, and governable (no invented PHI or proprietary data).
 - Modular so individual stages (ingest, script, voice, visuals, tagging, platform) can be run independently.
 - Searchable mini-YouTube-style browser + chat (grounded in transcripts + optional web exploration).
-- Integrable with Grok or similar models for chat over the content.
+- Integrable with Grok, Gemini, or Vertex AI for chat and generation.
 
 ## Core Pipeline
 
@@ -132,6 +138,10 @@ Additional specialized videos have been generated for the first real source (CMS
 ```
 /
 ├── README.md
+├── .env.example                 # Gemini / Grok / Vertex AI (ADC) environment template
+├── .gitignore
+├── config/
+│   └── llm-config.example.yaml  # Structured LLM provider config
 ├── docs/
 │   ├── images/                 # Architecture diagrams and thumbnails
 │   ├── skills/                  # Reusable skill documents
@@ -140,6 +150,7 @@ Additional specialized videos have been generated for the first real source (CMS
 │   │   └── tagging.md
 │   ├── sources/                 # Per-source plans
 │   ├── quick-start.md             # Full installation and usage guide
+│   ├── llm-configuration.md      # Gemini, Grok, Vertex AI ADC setup
 │   ├── ingestion-path.md
 │   ├── evaluation-framework.md
 │   ├── grok-integration.md
@@ -167,14 +178,16 @@ Additional specialized videos have been generated for the first real source (CMS
 - [x] Evaluation framework for clarity and technical accuracy.
 - [x] Add open-code-review skill for reviewing any code repository.
 - [x] Add Quick Start Guide (README section + docs/quick-start.md) with CMS series showcase.
+- [x] Add LLM configuration (.env.example, config/llm-config.example.yaml, docs/llm-configuration.md) for Gemini, Grok, and Vertex AI (ADC).
 
-**Current status**: Harness is operational. Architecture diagram embedded. Interface demo video embedded with thumbnail. Harness overview + four CMS videos generated and embedded. Open Code Review skill added for quality checks on any repo. Quick Start Guide added. Ready for next source or deeper motion/Manim upgrades.
+**Current status**: Harness is operational. Architecture diagram embedded. Interface demo video embedded with thumbnail. Harness overview + four CMS videos generated and embedded. Open Code Review skill added for quality checks on any repo. Quick Start Guide and multi-provider LLM configuration added. Ready for next source or deeper motion/Manim upgrades.
 
 ## Tech Notes
 
 - Visuals: slide-based + generated imagery + ffmpeg (Manim-style where feasible).
 - Voice: multi-speaker TTS (see docs/skills/voice.md).
 - Chat: grounded on transcripts + optional external search (clearly labeled).
+- LLM backends: Gemini API, Grok (xAI), or Vertex AI via ADC — see `docs/llm-configuration.md`.
 - Platform: React (Vite + TypeScript) mini-YouTube with search, tags, player, transcript, and chat.
 - Code review: alibaba/open-code-review via the skill in `skills/open-code-review/`.
 
