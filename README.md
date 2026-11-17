@@ -9,6 +9,29 @@ It turns source material — GitHub repositories, papers, documents, PowerPoint,
 
 Inspired by enterprise agent harness concepts (e.g., CitiusTech-style Knowledge-to-Experience diagrams) and modern agentic pipelines.
 
+## Quick Start
+
+Get started in minutes:
+
+```bash
+git clone https://github.com/YPCC/knowledge-to-experience-harness.git
+cd knowledge-to-experience-harness
+```
+
+- **View example videos immediately** — open any file in `videos/` or use the embeds below.
+- **Ingest your own PDF or PowerPoint**:
+  ```bash
+  pip install pdfplumber python-pptx
+  python scripts/ingest_stub.py your-file.pdf
+  ```
+  This produces a candidate video plan.
+- **Work with any GitHub repository or document set** — follow the modular pipeline (ingest → plan → script → video → metadata) using the skill documents in `docs/skills/`.
+- **Full guide**: See **[docs/quick-start.md](docs/quick-start.md)** for prerequisites, platform instructions, and a complete walkthrough.
+
+### Showcase: CMS Policy-as-Code Series
+
+The four videos below were generated from [cms-policy-as-code](https://github.com/YPCC/cms-policy-as-code). The candidate plan lives in `docs/sources/cms-policy-as-code-plan.md` and the metadata is in `platform/public/videos.json`. This is the repeatable pattern for any new source.
+
 ## See the Interface in Action
 
 [![Watch the video](https://raw.githubusercontent.com/YPCC/knowledge-to-experience-harness/main/docs/images/harness_interface_thumbnail.jpg)](https://raw.githubusercontent.com/YPCC/knowledge-to-experience-harness/main/videos/harness_interface_demo_v1.mp4)
@@ -116,6 +139,7 @@ Additional specialized videos have been generated for the first real source (CMS
 │   │   ├── visual-style.md
 │   │   └── tagging.md
 │   ├── sources/                 # Per-source plans
+│   ├── quick-start.md             # Full installation and usage guide
 │   ├── ingestion-path.md
 │   ├── evaluation-framework.md
 │   ├── grok-integration.md
@@ -142,8 +166,9 @@ Additional specialized videos have been generated for the first real source (CMS
 - [x] Research YouTube upload / API and Grok integration points.
 - [x] Evaluation framework for clarity and technical accuracy.
 - [x] Add open-code-review skill for reviewing any code repository.
+- [x] Add Quick Start Guide (README section + docs/quick-start.md) with CMS series showcase.
 
-**Current status**: Harness is operational. Architecture diagram embedded. Interface demo video embedded with thumbnail. Harness overview + four CMS videos generated and embedded. Open Code Review skill added for quality checks on any repo. Ready for next source or deeper motion/Manim upgrades.
+**Current status**: Harness is operational. Architecture diagram embedded. Interface demo video embedded with thumbnail. Harness overview + four CMS videos generated and embedded. Open Code Review skill added for quality checks on any repo. Quick Start Guide added. Ready for next source or deeper motion/Manim upgrades.
 
 ## Tech Notes
 
