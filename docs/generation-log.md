@@ -139,3 +139,11 @@ Records each major run of the Knowledge-to-Experience Harness.
   - Example PPTX input: `semrep_multisource_example.pptx`
   - Narrations + timestamps
 - **Notes**: Demonstrates the harness combining heterogeneous inputs (web, repo, registry, paper, slides) into focused short videos. Business video targets decision-makers; technical video explains the MetaMap + UMLS Semantic Network pipeline and links to modern KG frameworks.
+
+## 2026-11-17 — README Showcase + Step-by-Step Guide for SemRep
+
+- **Actions**:
+  - Created `docs/semrep-multisource-guide.md` with a full step-by-step walkthrough of collecting multi-source inputs, creating a PPTX, generating the plan, scripts, narrations, and videos.
+  - Updated root README with a dedicated **Showcase: SemRep Multi-Source Example** section that links to the guide and the candidate plan.
+  - Added the guide to the repository structure listing and Next Steps.
+- **Notes**: Users can now follow the exact process used for the SemRep example on any new combination of sources.
