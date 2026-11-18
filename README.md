@@ -1,214 +1,193 @@
-# Knowledge-to-Experience Agent Harness
+# Knowledge-to-Experience Harness
 
-**From knowledge elements to trusted, interactive learning experiences.**
+Reusable pipeline that turns source material — GitHub repositories, papers, PowerPoint, PDFs, or document sets — into short educational/demo videos, transcripts, metadata, and an interactive consumption experience with grounded chat.
 
-One Platform. Many Knowledge Elements. Greater Impact.
-
-This repository is the open starting point for a reusable, modular **Knowledge-to-Experience (K2E) Agent Harness**.
-It turns source material — GitHub repositories, papers, documents, PowerPoint, or videos — into polished short educational/demo videos (1–2 minutes, in the spirit of 3Blue1Brown), rich metadata, tags, and an interactive consumption experience with grounded chat.
-
-Inspired by enterprise agent harness concepts (e.g., CitiusTech-style Knowledge-to-Experience diagrams) and modern agentic pipelines.
+---
 
 ## Quick Start
-
-Get started in minutes:
 
 ```bash
 git clone https://github.com/YPCC/knowledge-to-experience-harness.git
 cd knowledge-to-experience-harness
+
+# One-time setup (detects macOS / Windows and installs prerequisites)
+python3 scripts/setup_environment.py
+
+# Start the generator console
+python3 scripts/generator_server.py
 ```
 
-- **Configure an LLM backend** (Gemini API key, Grok/xAI key, or Vertex AI via ADC):
-  ```bash
-  cp .env.example .env
-  # edit .env
-  ```
-  See **[docs/llm-configuration.md](docs/llm-configuration.md)**.
-- **View example videos immediately** — open any file in `videos/` or use the embeds below.
-- **Ingest your own PDF or PowerPoint**:
-  ```bash
-  pip install pdfplumber python-pptx
-  python scripts/ingest_stub.py your-file.pdf
-  ```
-  This produces a candidate video plan.
-- **Work with any GitHub repository or document set** — follow the modular pipeline (ingest → plan → script → video → metadata) using the skill documents in `docs/skills/`.
-- **Full guide**: See **[docs/quick-start.md](docs/quick-start.md)** for prerequisites, platform instructions, and a complete walkthrough.
+Open **http://localhost:8765**.
 
-### Showcase: CMS Policy-as-Code Series
+Follow the five steps in the browser:
 
-The four videos below were generated from [cms-policy-as-code](https://github.com/YPCC/cms-policy-as-code). The candidate plan lives in `docs/sources/cms-policy-as-code-plan.md` and the metadata is in `platform/public/videos.json`. This is the repeatable pattern for any new source.
+1. **Setup** — confirm the backend and tools are ready
+2. **Ingest** — drag-and-drop a PDF/PPTX/Markdown or paste a GitHub URL
+3. **Review Plan** — select the candidate videos
+4. **Generate** — the backend writes real artifacts
+5. **Videos & Feedback** — review outputs and submit refinement notes
 
-### Showcase: SemRep Multi-Source Example
+Outputs appear in `generated/`.
 
-A concrete demonstration of combining heterogeneous inputs (web page, GitHub repo, KG registry, research paper, and a curated PowerPoint) into two short videos:
+---
 
-- **Business overview** (~53 s) — value for pharma, payers, and research organizations (literature-based discovery, drug repurposing, clinical guidelines).
-- **Technical deep dive** (~63 s) — MetaMap + UMLS Semantic Network pipeline, SemMedDB, and connection to modern text-mining + knowledge-graph frameworks.
+## Detailed Steps
 
-**Step-by-step guide**: [docs/semrep-multisource-guide.md](docs/semrep-multisource-guide.md)  
-**Candidate plan**: [docs/sources/semrep-multisource-plan.md](docs/sources/semrep-multisource-plan.md)
+### 1. Run the setup script
 
-Generated artifacts include the two MP4s, narrations with timestamps, and the example PPTX input.
+```bash
+python3 scripts/setup_environment.py
+```
 
-## See the Interface in Action
+The script detects your operating system and installs only what is missing:
 
-[![Watch the video](https://raw.githubusercontent.com/YPCC/knowledge-to-experience-harness/main/docs/images/harness_interface_thumbnail.jpg)](https://raw.githubusercontent.com/YPCC/knowledge-to-experience-harness/main/videos/harness_interface_demo_v1.mp4)
+| Component | macOS | Windows |
+|-----------|-------|---------|
+| Python packages (`pdfplumber`, `python-pptx`) | pip | pip |
+| ffmpeg | Homebrew | winget or Chocolatey |
+| Node.js (optional, for React platform) | Homebrew | winget |
+| Working directories | created | created |
 
-Watch the ~45-second demo of the React mini-platform (search, tags, player + transcript, grounded chat) using the clinical pathways paper as the source example.
+Safe to re-run. Existing tools are skipped.
 
-## Architecture
+### 2. Start the generator backend
 
-![Knowledge-to-Experience Agent Harness Architecture](docs/images/k2e-architecture-diagram.png)
+```bash
+python3 scripts/generator_server.py
+```
 
-C4-style context and container view of the harness: knowledge sources → agent orchestration (ingest, generate, index, chat, govern, deliver) → experiences (videos, platform, chat). Includes reusable skills, pluggable tools, policy & governance, evaluation, and observability.
+The server:
+- Serves the McKinsey-style web UI
+- Accepts file uploads and GitHub URLs
+- Performs real text extraction
+- Writes plans, metadata, transcripts, short videos, and feedback into `generated/`
 
-## Why This Exists
+Leave the terminal open. The UI is at **http://localhost:8765**.
 
-- Turn raw technical/business knowledge into consumable, visual, trusted learning experiences.
-- Grounded, traceable, and governable (no invented PHI or proprietary data).
-- Modular so individual stages (ingest, script, voice, visuals, tagging, platform) can be run independently.
-- Searchable mini-YouTube-style browser + chat (grounded in transcripts + optional web exploration).
-- Integrable with Grok, Gemini, or Vertex AI for chat and generation.
+### 3. (Optional) Configure an LLM backend
+
+For full generation and chat:
+
+```bash
+cp .env.example .env
+# edit .env
+```
+
+See [docs/llm-configuration.md](docs/llm-configuration.md) for Gemini, Grok/xAI, or Vertex AI (ADC).
+
+### 4. (Optional) Open the consumption platform
+
+```bash
+cd platform
+npm install
+npm run dev
+```
+
+Professional React viewer with search, tag filtering, playback, transcript view, and grounded chat.
+
+---
+
+## Generated Artifacts
+
+```
+generated/
+  {source}.plan.json          # Candidate video plan
+  {video_id}.metadata.json    # Title, type, tags, provenance
+  {video_id}.timestamps.json  # Transcript with timestamps
+  {video_id}.mp4              # Short video
+  {video_id}.feedback.json    # User feedback for refinement
+```
+
+---
 
 ## Core Pipeline
 
-1. **Source Ingestion** — GitHub repo / video URL / paper / docs / PPTX / PDF → structured summary + candidate video topics.
-2. **Video Generation** — Scripts (overview, deep-dive, dialogue, short explainer, how-it-works) → multi-speaker voice → visuals + ffmpeg assembly → MP4 + MP3 + timestamped transcript.
-3. **Tagging & Metadata** — Manual + AI tags, short description, key timestamps, concept links, JSON metadata record. Provenance tracked (source commit/URL, prompts, settings).
-4. **Chat Interface** — Grounded Q&A over transcripts (jump to timestamps, cite source sections). Separate concept-exploration chat that can browse the web.
-5. **Consumption Platform** — Professional React (Vite + TypeScript) filterable video browser (search, tags). Playback + transcript + grounded chat side-by-side. Can grow or publish to YouTube.
+1. **Source Ingestion** — GitHub repo / video URL / paper / docs / PPTX / PDF → structured summary + candidate video topics
+2. **Video Generation** — Scripts (overview, deep-dive, dialogue, short explainer, how-it-works) → multi-speaker voice → visuals + ffmpeg assembly → MP4 + MP3 + timestamped transcript
+3. **Tagging & Metadata** — Manual + AI tags, short description, key timestamps, concept links, JSON metadata. Provenance tracked (source commit/URL, prompts, settings)
+4. **Chat Interface** — Grounded Q&A over transcripts (jump to timestamps, cite source sections). Separate concept-exploration chat that can browse the web
+5. **Consumption Platform** — Professional React (Vite + TypeScript) filterable video browser. Playback + transcript + grounded chat side-by-side
 
-## Code Review with Open Code Review
+---
 
-Use the skill at `skills/open-code-review/` to review **any** Git repository (this harness, the CMS source, platform code, or external repos) with [alibaba/open-code-review](https://github.com/alibaba/open-code-review).
+## Project Structure
 
-- Install: `npm install -g @alibaba-group/open-code-review`
-- Configure LLM once: `ocr config provider` / `ocr config model`
-- Invoke via the skill or directly: `ocr review --audience agent --background "context" --format json`
-- Supports workspace changes, branch diffs, single commits, or full `ocr scan`
-- Groups findings by severity; integrates with the evaluation framework
+| Path | Purpose |
+|------|---------|
+| `scripts/setup_environment.py` | Cross-platform prerequisite installer |
+| `scripts/generator_server.py` | Local backend for the generator console |
+| `generator-ui/` | McKinsey-style web UI (served by the backend) |
+| `platform/` | React consumption experience |
+| `docs/` | Skills, ingestion notes, evaluation framework, source plans |
+| `docs/skills/` | Reusable skill documents (voice, visual-style, tagging) |
+| `skills/open-code-review/` | Code-review skill for any Git repository |
+| `videos/` | Example generated videos |
+| `generated/` | Output plans, metadata, transcripts, videos, feedback |
+| `uploads/` | Temporary storage for uploaded source files |
+| `config/` | LLM provider configuration examples |
 
-See `skills/open-code-review/SKILL.md` for the full workflow.
+---
 
 ## Example Videos
 
-### 1. Knowledge-to-Experience Harness Itself (Meta Overview)
+### Harness Overview
+What is the Knowledge-to-Experience Harness? (~63 s)  
+[View](https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/k2e_harness_overview_v1.mp4)
 
-**What is the Knowledge-to-Experience Agent Harness?** (~63 seconds)  
-Clean overview of the modular pipeline: knowledge sources → agent harness → searchable educational videos + grounded chat platform.
+### CMS Policy-as-Code Series
+Generated from [cms-policy-as-code](https://github.com/YPCC/cms-policy-as-code):
 
-<video src="https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/k2e_harness_overview_v1.mp4" controls width="100%"></video>
+- Overview (~59 s) — [view](https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/cms_policy_overview_v1.mp4)
+- Business (~47 s) — [view](https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/cms_policy_business_v1.mp4)
+- Architecture (~53 s) — [view](https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/cms_policy_architecture_v1.mp4)
+- How it works (~42 s) — [view](https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/cms_policy_howitworks_v1.mp4)
 
-[Download / view raw](https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/k2e_harness_overview_v1.mp4)
+Candidate plan: `docs/sources/cms-policy-as-code-plan.md`
 
-This is the first video generated by the harness — explaining the harness.
+### SemRep Multi-Source Example
+Business overview (~53 s) and technical deep dive (~63 s) combining a web page, GitHub repository, knowledge-graph registry, research paper, and PowerPoint.  
+Guide: [docs/semrep-multisource-guide.md](docs/semrep-multisource-guide.md)
 
-### 2. Example Series Generated from Another GitHub Repository
+---
 
-Source: [cms-policy-as-code](https://github.com/YPCC/cms-policy-as-code) (Neuro-Symbolic CMS Policy-as-Code / Context Graph Engine)
+## Why This Exists
 
-#### CMS Policy-as-Code: From Unstructured Documents to Auditable Rules (~59s)
-<video src="https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/cms_policy_overview_v1.mp4" controls width="100%"></video>
-[Download](https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/cms_policy_overview_v1.mp4)
+- Turn raw technical and business knowledge into consumable, visual learning experiences
+- Keep outputs grounded, traceable, and free of invented sensitive data
+- Modular stages that can be run or re-run independently
+- Searchable mini-YouTube-style browser with grounded chat
+- Integrable with Grok, Gemini, or Vertex AI
 
-#### Why Policy-as-Code Matters for Healthcare Payers (~47s)
-<video src="https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/cms_policy_business_v1.mp4" controls width="100%"></video>
-[Download](https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/cms_policy_business_v1.mp4)
+---
 
-#### Neuro-Symbolic Architecture Explained (~53s)
-<video src="https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/cms_policy_architecture_v1.mp4" controls width="100%"></video>
-[Download](https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/cms_policy_architecture_v1.mp4)
+## Code Review
 
-#### How a Claim Becomes a Decision Trace (~42s)
-<video src="https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/cms_policy_howitworks_v1.mp4" controls width="100%"></video>
-[Download](https://github.com/YPCC/knowledge-to-experience-harness/raw/main/videos/cms_policy_howitworks_v1.mp4)
+The skill at `skills/open-code-review/` can review any Git repository using [alibaba/open-code-review](https://github.com/alibaba/open-code-review).
 
-All videos are also registered in `platform/public/videos.json` for the React mini-platform (search, filter, transcript, grounded chat).
+```bash
+npm install -g @alibaba-group/open-code-review
+ocr config provider
+ocr review --audience agent --background "context" --format json
+```
 
-### 3. SemRep Multi-Source Example
+See `skills/open-code-review/SKILL.md` for the full workflow.
 
-See the showcase section above and the full step-by-step guide at [docs/semrep-multisource-guide.md](docs/semrep-multisource-guide.md).
-
-## Short Plan — First Batch of Videos (Meta: Explaining the Harness Itself)
-
-| # | Title | Type | Length | Focus | Status |
-|---|-------|------|--------|-------|--------|
-| 1 | What is the Knowledge-to-Experience Harness? | Overview | 60–90s | High-level value, inputs → outputs | Generated |
-| 2 | Inside the Agent Harness (C4 Level 2) | Technical deep-dive | 90–120s | Planning loop, ingestion, generation, chat, evaluation | Planned |
-| 3 | From GitHub Repo to 90-Second Explainer | How-it-works | 60–90s | End-to-end walkthrough on a sample public repo | Planned |
-| 4 | Grounded Chat + Mini YouTube | Demo | 60s | Searching, timestamp jumps, Grok-style interaction | Platform live |
-| 5 | 3Blue1Brown-Style Visual Principles | Style guide | 60s | Clarity, visual metaphor, progressive disclosure | Skill doc ready |
-
-Additional specialized videos have been generated for the first real source (CMS Policy-as-Code) and the SemRep multi-source example — see the Example Videos and Showcase sections above.
+---
 
 ## Operating Principles
 
-- Prefer synthetic or publicly available source material.
-- Always emit reusable artifacts: scripts, transcripts, metadata JSON, intermediate audio.
-- Version and provenance for every generated video.
-- Modular skill documents for voice, visual style, captioning, branding.
-- When a new GitHub link is provided, produce a short plan (candidate videos + outline) before generating assets.
+- Prefer synthetic or publicly available source material
+- Produce reusable artifacts (scripts, transcripts, metadata JSON, `.mp4`)
+- Keep generation modular
+- Record provenance with each output
 
-## Repository Structure (evolving)
+---
 
-```
-/
-├── README.md
-├── .env.example                 # Gemini / Grok / Vertex AI (ADC) environment template
-├── .gitignore
-├── config/
-│   └── llm-config.example.yaml  # Structured LLM provider config
-├── docs/
-│   ├── images/                 # Architecture diagrams and thumbnails
-│   ├── skills/                  # Reusable skill documents
-│   │   ├── voice.md
-│   │   ├── visual-style.md
-│   │   └── tagging.md
-│   ├── sources/                 # Per-source plans
-│   ├── quick-start.md             # Full installation and usage guide
-│   ├── semrep-multisource-guide.md # Step-by-step multi-source example
-│   ├── llm-configuration.md      # Gemini, Grok, Vertex AI ADC setup
-│   ├── ingestion-path.md
-│   ├── evaluation-framework.md
-│   ├── grok-integration.md
-│   ├── youtube-publish-notes.md
-│   └── generation-log.md
-├── platform/                  # React mini-YouTube (Vite + TS)
-│   ├── public/videos.json        # Static metadata loader
-│   └── src/App.tsx
-├── scripts/                    # Generation & utility stubs
-│   ├── ingest_stub.py            # PPTX/PDF → candidate plan
-│   └── youtube_oauth_stub.py
-├── skills/                   # Agent skills (e.g. open-code-review)
-│   └── open-code-review/         # AI code review for any Git repo
-├── videos/                    # Example generated videos (embedded above)
-└── artifacts/                  # Additional generated files (large files may be gitignored)
-```
+## Next Steps
 
-## Next Steps (updated)
+- Wire full multi-speaker voice and visual generation into the backend stages
+- Connect the consumption platform to the `generated/` folder
+- Expand automated evaluation of clarity and technical accuracy
+- YouTube API publish path
 
-- [x] Flesh out skill documents (voice, visual style matching 3B1B clarity, tagging).
-- [x] Implement first ingestion + script generation on a public GitHub source (cms-policy-as-code).
-- [x] Generate sample 60-second overview video (harness + multiple CMS videos).
-- [x] Scaffold professional mini-platform (React/Vite instead of Streamlit) with transcript search + grounded chat.
-- [x] Research YouTube upload / API and Grok integration points.
-- [x] Evaluation framework for clarity and technical accuracy.
-- [x] Add open-code-review skill for reviewing any code repository.
-- [x] Add Quick Start Guide (README section + docs/quick-start.md) with CMS series showcase.
-- [x] Add LLM configuration (.env.example, config/llm-config.example.yaml, docs/llm-configuration.md) for Gemini, Grok, and Vertex AI (ADC).
-- [x] Add SemRep multi-source example (videos + step-by-step guide + plan).
-
-**Current status**: Harness is operational. Architecture diagram embedded. Interface demo video embedded with thumbnail. Harness overview + four CMS videos generated and embedded. Open Code Review skill added for quality checks on any repo. Quick Start Guide, multi-provider LLM configuration, and SemRep multi-source example added. Ready for next source or deeper motion/Manim upgrades.
-
-## Tech Notes
-
-- Visuals: slide-based + generated imagery + ffmpeg (Manim-style where feasible).
-- Voice: multi-speaker TTS (see docs/skills/voice.md).
-- Chat: grounded on transcripts + optional external search (clearly labeled).
-- LLM backends: Gemini API, Grok (xAI), or Vertex AI via ADC — see `docs/llm-configuration.md`.
-- Platform: React (Vite + TypeScript) mini-YouTube with search, tags, player, transcript, and chat.
-- Code review: alibaba/open-code-review via the skill in `skills/open-code-review/`.
-
-**Knowledge in. Trusted experiences out.**
-
-People | Technology | Impact
+See `docs/quick-start.md` for the extended guide and `docs/` for skill documents and research notes.
