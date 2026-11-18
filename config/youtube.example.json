@@ -1,0 +1,7 @@
+{
+  "client_secrets": "client_secrets.json",
+  "token_file": "youtube_token.json",
+  "privacy": "private",
+  "category_id": "22",
+  "_comment": "Copy to config/youtube.json and fill in paths. Never commit secrets. Run scripts/youtube_oauth_stub.py after placing client_secrets.json."
+}
