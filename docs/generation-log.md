@@ -128,3 +128,14 @@ Records each major run of the Knowledge-to-Experience Harness.
   - Added `.gitignore` to protect `.env` and local config.
   - Updated Quick Start and root README to reference the new configuration.
 - **Notes**: Supports API-key auth for Gemini and Grok, and Application Default Credentials for Vertex AI. No secrets are committed.
+
+## 2026-11-17 — SemRep Multi-Source Example
+
+- **Sources**: LHNCBC SKR page + GitHub lhncbc/SemRep + KG-Hub registry + PLOS ONE 2025 biopharma KG paper + curated PPTX.
+- **Outputs**:
+  - Candidate plan: `docs/sources/semrep-multisource-plan.md`
+  - Business overview video (~53s): `semrep_business_overview_v1.mp4`
+  - Technical deep dive (~63s): `semrep_technical_deepdive_v1.mp4`
+  - Example PPTX input: `semrep_multisource_example.pptx`
+  - Narrations + timestamps
+- **Notes**: Demonstrates the harness combining heterogeneous inputs (web, repo, registry, paper, slides) into focused short videos. Business video targets decision-makers; technical video explains the MetaMap + UMLS Semantic Network pipeline and links to modern KG frameworks.
