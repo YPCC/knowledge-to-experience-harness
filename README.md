@@ -38,6 +38,18 @@ cd knowledge-to-experience-harness
 
 The four videos below were generated from [cms-policy-as-code](https://github.com/YPCC/cms-policy-as-code). The candidate plan lives in `docs/sources/cms-policy-as-code-plan.md` and the metadata is in `platform/public/videos.json`. This is the repeatable pattern for any new source.
 
+### Showcase: SemRep Multi-Source Example
+
+A concrete demonstration of combining heterogeneous inputs (web page, GitHub repo, KG registry, research paper, and a curated PowerPoint) into two short videos:
+
+- **Business overview** (~53 s) — value for pharma, payers, and research organizations (literature-based discovery, drug repurposing, clinical guidelines).
+- **Technical deep dive** (~63 s) — MetaMap + UMLS Semantic Network pipeline, SemMedDB, and connection to modern text-mining + knowledge-graph frameworks.
+
+**Step-by-step guide**: [docs/semrep-multisource-guide.md](docs/semrep-multisource-guide.md)  
+**Candidate plan**: [docs/sources/semrep-multisource-plan.md](docs/sources/semrep-multisource-plan.md)
+
+Generated artifacts include the two MP4s, narrations with timestamps, and the example PPTX input.
+
 ## See the Interface in Action
 
 [![Watch the video](https://raw.githubusercontent.com/YPCC/knowledge-to-experience-harness/main/docs/images/harness_interface_thumbnail.jpg)](https://raw.githubusercontent.com/YPCC/knowledge-to-experience-harness/main/videos/harness_interface_demo_v1.mp4)
@@ -113,6 +125,10 @@ Source: [cms-policy-as-code](https://github.com/YPCC/cms-policy-as-code) (Neuro-
 
 All videos are also registered in `platform/public/videos.json` for the React mini-platform (search, filter, transcript, grounded chat).
 
+### 3. SemRep Multi-Source Example
+
+See the showcase section above and the full step-by-step guide at [docs/semrep-multisource-guide.md](docs/semrep-multisource-guide.md).
+
 ## Short Plan — First Batch of Videos (Meta: Explaining the Harness Itself)
 
 | # | Title | Type | Length | Focus | Status |
@@ -123,7 +139,7 @@ All videos are also registered in `platform/public/videos.json` for the React mi
 | 4 | Grounded Chat + Mini YouTube | Demo | 60s | Searching, timestamp jumps, Grok-style interaction | Platform live |
 | 5 | 3Blue1Brown-Style Visual Principles | Style guide | 60s | Clarity, visual metaphor, progressive disclosure | Skill doc ready |
 
-Additional specialized videos have been generated for the first real source (CMS Policy-as-Code) — see the Example Videos section above.
+Additional specialized videos have been generated for the first real source (CMS Policy-as-Code) and the SemRep multi-source example — see the Example Videos and Showcase sections above.
 
 ## Operating Principles
 
@@ -150,6 +166,7 @@ Additional specialized videos have been generated for the first real source (CMS
 │   │   └── tagging.md
 │   ├── sources/                 # Per-source plans
 │   ├── quick-start.md             # Full installation and usage guide
+│   ├── semrep-multisource-guide.md # Step-by-step multi-source example
 │   ├── llm-configuration.md      # Gemini, Grok, Vertex AI ADC setup
 │   ├── ingestion-path.md
 │   ├── evaluation-framework.md
@@ -179,8 +196,9 @@ Additional specialized videos have been generated for the first real source (CMS
 - [x] Add open-code-review skill for reviewing any code repository.
 - [x] Add Quick Start Guide (README section + docs/quick-start.md) with CMS series showcase.
 - [x] Add LLM configuration (.env.example, config/llm-config.example.yaml, docs/llm-configuration.md) for Gemini, Grok, and Vertex AI (ADC).
+- [x] Add SemRep multi-source example (videos + step-by-step guide + plan).
 
-**Current status**: Harness is operational. Architecture diagram embedded. Interface demo video embedded with thumbnail. Harness overview + four CMS videos generated and embedded. Open Code Review skill added for quality checks on any repo. Quick Start Guide and multi-provider LLM configuration added. Ready for next source or deeper motion/Manim upgrades.
+**Current status**: Harness is operational. Architecture diagram embedded. Interface demo video embedded with thumbnail. Harness overview + four CMS videos generated and embedded. Open Code Review skill added for quality checks on any repo. Quick Start Guide, multi-provider LLM configuration, and SemRep multi-source example added. Ready for next source or deeper motion/Manim upgrades.
 
 ## Tech Notes
 
