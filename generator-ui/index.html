@@ -1,1 +1,487 @@
-PLACEHOLDER_WILL_REPLACE
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge-to-Experience Harness · Generator Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #051c2c;
+    --navy-light: #0a2e4a;
+    --accent: #00a3e0;
+    --accent-dark: #0086b8;
+    --gray-50: #f8f9fa;
+    --gray-100: #f1f3f4;
+    --gray-200: #e8eaed;
+    --gray-500: #5f6368;
+    --gray-700: #3c4043;
+    --white: #ffffff;
+    --success: #0d9488;
+    --warning: #d97706;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--gray-50);
+    color: var(--navy);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  .header {
+    background: var(--navy);
+    color: white;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--accent);
+  }
+  .header h1 { font-size: 18px; font-weight: 600; letter-spacing: -0.2px; }
+  .header .subtitle { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+  .header .badge {
+    background: var(--accent);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .container { max-width: 1280px; margin: 0 auto; padding: 28px 32px 60px; }
+  .stepper {
+    display: flex; gap: 8px; margin-bottom: 28px;
+    background: white; padding: 12px 16px; border-radius: var(--radius); box-shadow: var(--shadow); overflow-x: auto;
+  }
+  .step {
+    display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 6px;
+    font-size: 13px; font-weight: 500; color: var(--gray-500); cursor: pointer; white-space: nowrap;
+  }
+  .step:hover { background: var(--gray-100); }
+  .step.active { background: var(--navy); color: white; }
+  .step.done { color: var(--success); }
+  .step .num {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--gray-200);
+    display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600;
+  }
+  .step.active .num { background: var(--accent); color: white; }
+  .step.done .num { background: var(--success); color: white; }
+  .card { background: white; border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px; margin-bottom: 20px; }
+  .card h2 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .card .desc { font-size: 13px; color: var(--gray-500); margin-bottom: 20px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: white;
+    border: none; padding: 10px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  .btn:hover { background: var(--navy-light); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--gray-200); }
+  .btn-outline:hover { background: var(--gray-100); }
+  .btn-accent { background: var(--accent); }
+  .btn-success { background: var(--success); }
+  .dropzone {
+    border: 2px dashed var(--gray-200); border-radius: var(--radius); padding: 48px 24px;
+    text-align: center; background: var(--gray-50); cursor: pointer;
+  }
+  .dropzone.dragover { border-color: var(--accent); background: #f0f9ff; }
+  .dropzone h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .dropzone p { font-size: 13px; color: var(--gray-500); }
+  .source-list { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+  .source-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--gray-50); border-radius: 6px; font-size: 13px; }
+  .source-item .type { color: var(--gray-500); font-size: 11px; background: white; padding: 2px 8px; border-radius: 12px; }
+  .plan-item { display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; align-items: start; padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
+  .plan-item:last-child { border-bottom: none; }
+  .plan-item input { margin-top: 3px; accent-color: var(--accent); }
+  .plan-item .title { font-weight: 600; font-size: 14px; }
+  .plan-item .meta { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+  .plan-item .outline { font-size: 12px; color: var(--gray-700); margin-top: 4px; }
+  .progress-bar { height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden; margin: 8px 0; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.4s ease; }
+  .stage { display: flex; align-items: center; gap: 12px; padding: 10px 0; font-size: 13px; }
+  .stage .status { width: 8px; height: 8px; border-radius: 50%; background: var(--gray-200); }
+  .stage.running .status { background: var(--accent); animation: pulse 1.2s infinite; }
+  .stage.done .status { background: var(--success); }
+  @keyframes pulse { 50% { opacity: 0.4; } }
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .video-card { background: white; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--gray-100); }
+  .video-thumb { height: 140px; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 500; }
+  .video-card .body { padding: 14px; }
+  .video-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .video-card .meta { font-size: 12px; color: var(--gray-500); margin-bottom: 10px; }
+  .feedback-form { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+  .feedback-form textarea { width: 100%; border: 1px solid var(--gray-200); border-radius: 6px; padding: 8px 10px; font-family: inherit; font-size: 12px; resize: vertical; min-height: 60px; }
+  .status-pill { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 12px; background: var(--gray-100); color: var(--gray-700); }
+  .status-pill.ready { background: #d1fae5; color: #065f46; }
+  .env-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+  .env-item { padding: 12px 14px; background: var(--gray-50); border-radius: 6px; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+  .env-item .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gray-200); }
+  .env-item.ok .dot { background: var(--success); }
+  .footer-note { text-align: center; font-size: 12px; color: var(--gray-500); margin-top: 32px; }
+  .hidden { display: none; }
+  .log { background: #0a1628; color: #a8b3c5; font-family: ui-monospace, monospace; font-size: 12px; padding: 12px 14px; border-radius: 6px; max-height: 160px; overflow-y: auto; margin-top: 12px; }
+  .log .ok { color: #34d399; }
+  .log .info { color: #60a5fa; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <h1>Knowledge-to-Experience Harness</h1>
+    <div class="subtitle">Generator Console · Source → Plan → Videos → Feedback</div>
+  </div>
+  <div class="badge">v1.0 · Local</div>
+</div>
+
+<div class="container">
+  <div class="stepper" id="stepper">
+    <div class="step active" data-step="1"><span class="num">1</span> Setup</div>
+    <div class="step" data-step="2"><span class="num">2</span> Ingest</div>
+    <div class="step" data-step="3"><span class="num">3</span> Review Plan</div>
+    <div class="step" data-step="4"><span class="num">4</span> Generate</div>
+    <div class="step" data-step="5"><span class="num">5</span> Videos & Feedback</div>
+  </div>
+
+  <div class="panel" id="panel-1">
+    <div class="card">
+      <h2>Environment Setup</h2>
+      <div class="desc">Checks the local backend and available tools (Python, ffmpeg, pdfplumber, python-pptx). Start the server first for real artifact generation.</div>
+      <button class="btn" id="btn-setup">Check & Prepare Environment</button>
+      <div class="env-grid" id="env-grid" style="display:none;">
+        <div class="env-item" id="env-node"><span class="dot"></span> Runtime</div>
+        <div class="env-item" id="env-python"><span class="dot"></span> Python + deps</div>
+        <div class="env-item" id="env-ffmpeg"><span class="dot"></span> ffmpeg</div>
+        <div class="env-item" id="env-skills"><span class="dot"></span> Skills</div>
+        <div class="env-item" id="env-config"><span class="dot"></span> Config</div>
+      </div>
+      <div class="log hidden" id="setup-log"></div>
+    </div>
+    <div class="card">
+      <h2>Start the Backend</h2>
+      <div class="desc">From the repository root run:</div>
+      <pre style="background:#0a1628; color:#a8b3c5; padding:12px; border-radius:6px; font-size:12px; overflow-x:auto;">python3 scripts/generator_server.py</pre>
+      <p style="font-size:13px; color:var(--gray-500); margin-top:10px;">Then open <strong>http://localhost:8765</strong>. The UI will automatically detect the backend and write real plans, metadata, transcripts, and short videos into <code>artifacts/generated/</code>.</p>
+    </div>
+  </div>
+
+  <div class="panel hidden" id="panel-2">
+    <div class="card">
+      <h2>Source Ingestion</h2>
+      <div class="desc">Drop a PDF, PPTX, or Markdown file, or paste a GitHub URL. The backend extracts text and returns a candidate video plan.</div>
+      <div class="dropzone" id="dropzone">
+        <h3>Drag & drop sources here</h3>
+        <p>PDF · PPTX · Markdown · GitHub URL</p>
+        <p style="margin-top:8px; font-size:12px;">or click to browse</p>
+        <input type="file" id="file-input" multiple accept=".pdf,.pptx,.md,.txt" style="display:none;">
+      </div>
+      <div style="margin-top:16px; display:flex; gap:8px;">
+        <input id="url-input" type="text" placeholder="Paste GitHub URL" style="flex:1; border:1px solid var(--gray-200); border-radius:6px; padding:10px 12px; font-size:13px;">
+        <button class="btn btn-outline" id="btn-add-url">Add URL</button>
+      </div>
+      <div class="source-list" id="source-list"></div>
+      <div style="margin-top:16px;">
+        <button class="btn" id="btn-generate-plan" disabled>Generate Plan from Sources</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel hidden" id="panel-3">
+    <div class="card">
+      <h2>Review Candidate Plan</h2>
+      <div class="desc">Select which videos to produce. Approving sends the selection to the backend for generation.</div>
+      <div id="plan-list"></div>
+      <div style="margin-top:16px; display:flex; gap:8px;">
+        <button class="btn btn-outline" id="btn-back-ingest">Back to Sources</button>
+        <button class="btn btn-accent" id="btn-approve-plan">Approve & Generate</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel hidden" id="panel-4">
+    <div class="card">
+      <h2>Video Generation</h2>
+      <div class="desc">The backend writes real metadata, transcripts, and short videos into artifacts/generated/.</div>
+      <div id="gen-stages"></div>
+      <div class="progress-bar"><div class="progress-fill" id="overall-progress"></div></div>
+      <div class="log" id="gen-log"></div>
+      <div style="margin-top:16px;">
+        <button class="btn btn-success" id="btn-view-results" disabled>View Generated Videos</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel hidden" id="panel-5">
+    <div class="card">
+      <h2>Generated Videos</h2>
+      <div class="desc">Review outputs. Feedback is stored as JSON next to each video for the next refinement run.</div>
+      <div class="video-grid" id="video-grid"></div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    Knowledge-to-Experience Harness · Local generator console<br>
+    Real backend writes artifacts to <code>artifacts/generated/</code>. Start with <code>python3 scripts/generator_server.py</code>.
+  </div>
+</div>
+
+<script>
+const API = (window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1'))
+  ? window.location.origin
+  : 'http://localhost:8765';
+
+const state = {
+  step: 1, envReady: false, sources: [], plan: [], selectedPlan: [], videos: [], feedback: {}, backend: false
+};
+
+const $ = id => document.getElementById(id);
+
+async function checkBackend() {
+  try {
+    const r = await fetch(`${API}/api/status`);
+    if (r.ok) { state.backend = true; return true; }
+  } catch (e) {}
+  state.backend = false;
+  return false;
+}
+
+function setStep(n) {
+  state.step = n;
+  document.querySelectorAll('.step').forEach(s => {
+    s.classList.toggle('active', +s.dataset.step === n);
+    s.classList.toggle('done', +s.dataset.step < n);
+  });
+  document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+  $(`panel-${n}`).classList.remove('hidden');
+}
+
+document.querySelectorAll('.step').forEach(s => {
+  s.addEventListener('click', () => {
+    const n = +s.dataset.step;
+    if (n === 1 || (n === 2 && state.envReady) || (n === 3 && state.plan.length) || (n === 4 && state.selectedPlan.length) || (n === 5 && state.videos.length)) setStep(n);
+  });
+});
+
+$('btn-setup').addEventListener('click', async () => {
+  const log = $('setup-log');
+  log.classList.remove('hidden');
+  log.innerHTML = '';
+  const online = await checkBackend();
+  if (online) {
+    log.innerHTML += `<div class="info">Backend detected at ${API}</div>`;
+    const r = await fetch(`${API}/api/status`);
+    const data = await r.json();
+    const checks = data.checks || {};
+    [['Python', checks.python], ['ffmpeg', checks.ffmpeg], ['pdfplumber', checks.pdfplumber], ['python-pptx', checks.python_pptx], ['Artifacts writable', checks.artifacts_writable]]
+      .forEach(([name, ok]) => { log.innerHTML += `<div class="${ok ? 'ok' : 'info'}">${name}: ${ok ? 'ready' : 'missing'}</div>`; });
+    log.innerHTML += `<div class="ok">Real backend ready. Ingestion and generation will write artifacts.</div>`;
+    $('env-grid').style.display = 'grid';
+    ['env-node','env-python','env-ffmpeg','env-skills','env-config'].forEach(id => $(id).classList.add('ok'));
+  } else {
+    log.innerHTML += `<div class="info">No backend detected. Running in simulation mode.</div>`;
+    log.innerHTML += `<div class="info">Start the server: python3 scripts/generator_server.py</div>`;
+  }
+  state.envReady = true;
+  $('btn-setup').textContent = online ? 'Backend Ready' : 'Simulation Ready';
+  $('btn-setup').disabled = true;
+});
+
+const dropzone = $('dropzone');
+const fileInput = $('file-input');
+dropzone.addEventListener('click', () => fileInput.click());
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+dropzone.addEventListener('drop', e => { e.preventDefault(); dropzone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+function handleFiles(files) {
+  Array.from(files).forEach(f => state.sources.push({ name: f.name, type: f.type || 'file', size: f.size, file: f }));
+  renderSources();
+}
+$('btn-add-url').addEventListener('click', () => {
+  const url = $('url-input').value.trim();
+  if (!url) return;
+  state.sources.push({ name: url.split('/').slice(-2).join('/') || url, type: 'github', url });
+  $('url-input').value = '';
+  renderSources();
+});
+function renderSources() {
+  $('source-list').innerHTML = state.sources.map(s => `
+    <div class="source-item"><div class="name">${s.name}</div><span class="type">${s.type === 'github' ? 'GitHub' : 'File'}</span></div>
+  `).join('');
+  $('btn-generate-plan').disabled = state.sources.length === 0;
+}
+
+$('btn-generate-plan').addEventListener('click', async () => {
+  const btn = $('btn-generate-plan');
+  btn.disabled = true;
+  btn.textContent = 'Generating plan…';
+  if (state.backend) {
+    try {
+      const src = state.sources[0];
+      let res;
+      if (src.file) {
+        const form = new FormData();
+        form.append('file', src.file, src.name);
+        res = await fetch(`${API}/api/ingest`, { method: 'POST', body: form });
+      } else {
+        res = await fetch(`${API}/api/ingest`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: src.url || src.name })
+        });
+      }
+      const plan = await res.json();
+      state.plan = (plan.candidate_videos || []).map(c => ({ ...c, selected: true }));
+      renderPlan();
+      setStep(3);
+    } catch (e) {
+      alert('Backend ingest failed: ' + e.message);
+    }
+  } else {
+    const base = state.sources[0]?.name || 'Source';
+    state.plan = [
+      { id: 'overview', title: `${base} · Business Overview`, type: 'overview', duration: '45–60s', outline: 'Problem context, key capabilities, business value, and high-level outcomes.', selected: true },
+      { id: 'architecture', title: `${base} · Architecture Deep Dive`, type: 'technical', duration: '50–70s', outline: 'System structure, core components, data flow, and integration points.', selected: true },
+      { id: 'howitworks', title: `${base} · How It Works`, type: 'walkthrough', duration: '40–55s', outline: 'Step-by-step walkthrough of the primary workflow with key decisions.', selected: true }
+    ];
+    renderPlan();
+    setStep(3);
+  }
+  btn.disabled = false;
+  btn.textContent = 'Generate Plan from Sources';
+});
+
+function renderPlan() {
+  $('plan-list').innerHTML = state.plan.map(p => `
+    <div class="plan-item">
+      <input type="checkbox" ${p.selected ? 'checked' : ''} data-id="${p.id}">
+      <div>
+        <div class="title">${p.title}</div>
+        <div class="meta">${p.type} · ${p.duration}</div>
+        <div class="outline">${p.outline}</div>
+      </div>
+      <span class="status-pill">${p.type}</span>
+    </div>
+  `).join('');
+  document.querySelectorAll('#plan-list input').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const item = state.plan.find(p => p.id === cb.dataset.id);
+      if (item) item.selected = cb.checked;
+    });
+  });
+}
+$('btn-back-ingest').addEventListener('click', () => setStep(2));
+$('btn-approve-plan').addEventListener('click', () => {
+  state.selectedPlan = state.plan.filter(p => p.selected);
+  if (!state.selectedPlan.length) return alert('Select at least one video.');
+  startGeneration();
+  setStep(4);
+});
+
+async function startGeneration() {
+  const stages = [
+    { id: 'script', label: 'Script generation' },
+    { id: 'voice', label: 'Voice narration' },
+    { id: 'visuals', label: 'Visual assembly' },
+    { id: 'captions', label: 'Captions & timestamps' },
+    { id: 'metadata', label: 'Metadata & provenance' }
+  ];
+  $('gen-stages').innerHTML = stages.map(s => `<div class="stage" id="stage-${s.id}"><span class="status"></span><span>${s.label}</span></div>`).join('');
+  const log = $('gen-log');
+  log.innerHTML = '';
+  $('overall-progress').style.width = '0%';
+
+  if (state.backend) {
+    log.innerHTML += `<div class="info">Calling real backend /api/generate…</div>`;
+    let i = 0;
+    const timer = setInterval(() => {
+      if (i < stages.length) { const el = $(`stage-${stages[i].id}`); if (el) el.classList.add('running'); i++; }
+    }, 350);
+    try {
+      const res = await fetch(`${API}/api/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ selected: state.selectedPlan, source: state.sources[0]?.name || 'source' })
+      });
+      const data = await res.json();
+      clearInterval(timer);
+      stages.forEach(s => { const el = $(`stage-${s.id}`); if (el) { el.classList.remove('running'); el.classList.add('done'); } });
+      $('overall-progress').style.width = '100%';
+      state.videos = data.videos || [];
+      log.innerHTML += `<div class="ok">Backend wrote ${state.videos.length} video(s) to artifacts/generated/</div>`;
+      $('btn-view-results').disabled = false;
+    } catch (e) {
+      clearInterval(timer);
+      log.innerHTML += `<div class="info">Backend error: ${e.message}</div>`;
+    }
+  } else {
+    let progress = 0;
+    stages.forEach((s, i) => {
+      setTimeout(() => { const el = $(`stage-${s.id}`); el.classList.add('running'); log.innerHTML += `<div class="info">Starting ${s.label}…</div>`; }, i * 600);
+      setTimeout(() => {
+        const el = $(`stage-${s.id}`);
+        el.classList.remove('running'); el.classList.add('done');
+        log.innerHTML += `<div class="ok">${s.label} complete</div>`;
+        progress = ((i + 1) / stages.length) * 100;
+        $('overall-progress').style.width = progress + '%';
+        if (i === stages.length - 1) {
+          state.videos = state.selectedPlan.map(p => ({ id: p.id, title: p.title, type: p.type, duration: p.duration, status: 'ready' }));
+          $('btn-view-results').disabled = false;
+          log.innerHTML += `<div class="ok">Simulation complete. Start the backend for real artifacts.</div>`;
+        }
+      }, i * 600 + 450);
+    });
+  }
+}
+
+$('btn-view-results').addEventListener('click', () => { renderVideos(); setStep(5); });
+
+function renderVideos() {
+  const grid = $('video-grid');
+  grid.innerHTML = state.videos.map(v => `
+    <div class="video-card">
+      <div class="video-thumb">${(v.type || 'video').toUpperCase()}</div>
+      <div class="body">
+        <h4>${v.title}</h4>
+        <div class="meta">${v.duration || ''} · ${v.type || ''}</div>
+        <span class="status-pill ready">Ready</span>
+        ${v.video_url ? `<div style="margin:8px 0;"><a href="${API}${v.video_url}" target="_blank" style="font-size:12px; color:var(--accent);">Open video</a></div>` : ''}
+        <div class="feedback-form">
+          <textarea placeholder="Feedback (clarity, accuracy, tone, missing points…)" data-id="${v.id}"></textarea>
+          <button class="btn btn-outline" style="font-size:12px; padding:6px 12px;" data-id="${v.id}">Submit Feedback</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  grid.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.id;
+      const ta = grid.querySelector(`textarea[data-id="${id}"]`);
+      const text = ta.value.trim();
+      if (!text) return;
+      state.feedback[id] = text;
+      if (state.backend) {
+        try {
+          await fetch(`${API}/api/feedback`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, feedback: text })
+          });
+        } catch (e) {}
+      }
+      btn.textContent = 'Feedback recorded';
+      btn.disabled = true;
+      ta.disabled = true;
+      const pill = btn.closest('.video-card').querySelector('.status-pill');
+      pill.textContent = 'Feedback applied';
+    });
+  });
+}
+
+checkBackend().then(ok => {
+  if (ok) { const b = document.querySelector('.badge'); if (b) b.textContent = 'v1.0 · Backend'; }
+});
+</script>
+</body>
+</html>
