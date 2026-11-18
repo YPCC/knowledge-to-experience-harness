@@ -1,0 +1,99 @@
+.app.dark {
+  background: #0f172a;
+  color: #e2e8f0;
+  min-height: 100vh;
+  font-family: system-ui, sans-serif;
+}
+header {
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid #334155;
+}
+header h1 { margin: 0; font-size: 1.25rem; }
+.search {
+  flex: 1;
+  max-width: 480px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #475569;
+  background: #1e293b;
+  color: white;
+}
+.tags {
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.tags button {
+  background: #1e293b;
+  color: #cbd5e1;
+  border: 1px solid #475569;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.tags button.active {
+  background: #0d9488;
+  color: white;
+  border-color: #0d9488;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+}
+.card {
+  background: #1e293b;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #334155;
+  transition: transform 0.15s;
+}
+.card:hover { transform: translateY(-2px); }
+.thumb {
+  height: 140px;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #94a3b8;
+}
+.card h3 { margin: 0.75rem 1rem 0.25rem; font-size: 1rem; }
+.card p { margin: 0 1rem 0.75rem; font-size: 0.85rem; color: #94a3b8; }
+.badges { padding: 0 1rem 0.75rem; display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.type { background: #0d9488; color: white; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; }
+.tag { background: #334155; color: #cbd5e1; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; }
+.player-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 1rem;
+  padding: 1rem;
+}
+.player video { background: black; border-radius: 8px; }
+.side { display: flex; flex-direction: column; gap: 1rem; }
+.transcript, .chat {
+  background: #1e293b;
+  border-radius: 8px;
+  padding: 0.75rem;
+  max-height: 50vh;
+  overflow: auto;
+}
+.line { margin: 0.4rem 0; font-size: 0.9rem; }
+.time { color: #0d9488; font-weight: 600; margin-right: 0.5rem; }
+.messages { min-height: 120px; }
+.msg { margin: 0.5rem 0; padding: 0.5rem; border-radius: 6px; font-size: 0.9rem; white-space: pre-wrap; }
+.msg.user { background: #0d9488; color: white; }
+.msg.bot { background: #334155; }
+.input-row { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.input-row input { flex: 1; padding: 0.5rem; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; }
+.input-row button { background: #0d9488; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; }
+.empty { text-align: center; padding: 2rem; color: #94a3b8; }
+@media (max-width: 900px) {
+  .player-layout { grid-template-columns: 1fr; }
+}
