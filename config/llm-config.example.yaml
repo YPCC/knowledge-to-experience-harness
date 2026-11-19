@@ -3,7 +3,7 @@
 # Secrets stay in environment variables / .env — never put real API keys in this file.
 
 # Which provider to use by default.
-# Supported values: gemini | grok | vertex
+# Supported values: gemini | grok | vertex | openai | claude
 default_provider: grok
 
 providers:
@@ -12,7 +12,6 @@ providers:
     enabled: true
     api_key_env: GEMINI_API_KEY          # or GOOGLE_API_KEY
     model: gemini-2.5-flash
-    # base_url: optional override
 
   # Grok / xAI API — uses API key
   grok:
@@ -32,6 +31,19 @@ providers:
     location: us-central1                 # fallback if env var not set
     model: gemini-2.5-flash
     use_vertexai: true                    # maps to GOOGLE_GENAI_USE_VERTEXAI=true
+
+  # OpenAI / ChatGPT API — uses API key
+  openai:
+    enabled: true
+    api_key_env: OPENAI_API_KEY
+    model: gpt-4o
+    base_url: https://api.openai.com/v1
+
+  # Anthropic Claude API — uses API key
+  claude:
+    enabled: true
+    api_key_env: ANTHROPIC_API_KEY
+    model: claude-3-5-sonnet-20241022
 
 # Optional: which stages of the harness prefer which provider
 # (script generation, chat, tagging, evaluation, …)
