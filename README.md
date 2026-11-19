@@ -13,6 +13,10 @@ cd knowledge-to-experience-harness
 # One-time setup (detects macOS / Windows and installs prerequisites)
 python3 scripts/setup_environment.py
 
+# Configure an LLM backend (required for full generation and chat)
+cp .env.example .env
+# edit .env and add at least one API key (see docs/llm-configuration.md)
+
 # Start the generator console
 python3 scripts/generator_server.py
 ```
@@ -21,7 +25,7 @@ Open **http://localhost:8765**.
 
 Follow the five steps in the browser:
 
-1. **Setup** — confirm the backend and tools are ready
+1. **Setup** — confirm the backend, tools, and LLM provider are ready
 2. **Ingest** — drag-and-drop a PDF/PPTX/Markdown or paste a GitHub URL
 3. **Review Plan** — select the candidate videos
 4. **Generate** — the backend writes real artifacts
@@ -50,7 +54,26 @@ The script detects your operating system and installs only what is missing:
 
 Safe to re-run. Existing tools are skipped.
 
-### 2. Start the generator backend
+### 2. Configure an LLM backend
+
+Full generation and grounded chat require at least one LLM provider.
+
+```bash
+cp .env.example .env
+# edit .env
+```
+
+Supported providers (see [docs/llm-configuration.md](docs/llm-configuration.md) for details):
+
+- **Gemini API** (Google AI Studio) — Cloud API key (`GEMINI_API_KEY`)
+- **Grok / xAI API** — API key (`XAI_API_KEY`)
+- **Vertex AI** — Application Default Credentials (ADC)
+- **OpenAI / ChatGPT API** — API key (`OPENAI_API_KEY`)
+- **Anthropic Claude API** — API key (`ANTHROPIC_API_KEY`)
+
+The generator console lets you test keys and shows clear error messages if a provider is not configured correctly.
+
+### 3. Start the generator backend
 
 ```bash
 python3 scripts/generator_server.py
@@ -61,19 +84,9 @@ The server:
 - Accepts file uploads and GitHub URLs
 - Performs real text extraction
 - Writes plans, metadata, transcripts, short videos, and feedback into `generated/`
+- Checks LLM provider configuration and reports status
 
 Leave the terminal open. The UI is at **http://localhost:8765**.
-
-### 3. (Optional) Configure an LLM backend
-
-For full generation and chat:
-
-```bash
-cp .env.example .env
-# edit .env
-```
-
-See [docs/llm-configuration.md](docs/llm-configuration.md) for Gemini, Grok/xAI, or Vertex AI (ADC).
 
 ### 4. (Optional) Open the consumption platform
 
@@ -156,7 +169,7 @@ Guide: [docs/semrep-multisource-guide.md](docs/semrep-multisource-guide.md)
 - Keep outputs grounded, traceable, and free of invented sensitive data
 - Modular stages that can be run or re-run independently
 - Searchable mini-YouTube-style browser with grounded chat
-- Integrable with Grok, Gemini, or Vertex AI
+- Integrable with Grok, Gemini, Vertex AI, OpenAI/ChatGPT, or Claude
 
 ---
 
@@ -191,6 +204,7 @@ Implemented in this update:
 - Automated evaluation of clarity and technical accuracy (`scripts/evaluation.py`), results stored in metadata
 - Consumption platform loads from `generated/` when the backend is running (falls back to static `videos.json`)
 - YouTube publish path with config-based credentials (`scripts/youtube_publish.py`, `config/youtube.example.json`, `docs/youtube-config.md`)
+- Full LLM backend support (Gemini Cloud API key, Grok, Vertex AI ADC, OpenAI/ChatGPT, Claude) with configuration testing and clear error messages in the generator UI
 
 Remaining:
 
