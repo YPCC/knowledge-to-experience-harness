@@ -1,6 +1,13 @@
 # LLM Backend Configuration
 
-The Knowledge-to-Experience Harness can use **Gemini API**, **Grok (xAI)**, or **Vertex AI** (via Application Default Credentials) for script generation, grounded chat, tagging, evaluation, and other LLM stages.
+The Knowledge-to-Experience Harness supports multiple LLM backends for script generation, grounded chat, tagging, evaluation, and other stages.
+
+**Supported providers**:
+- **Gemini API** (Google AI Studio / Generative Language API) — Cloud API key
+- **Grok / xAI API** — API key
+- **Vertex AI** (Gemini on Google Cloud) — Application Default Credentials (ADC) or service account
+- **OpenAI / ChatGPT API** — API key
+- **Anthropic Claude API** — API key
 
 Credentials are never stored in the repository. Use environment variables (or a local `.env` file) plus an optional YAML config.
 
@@ -10,16 +17,18 @@ Credentials are never stored in the repository. Use environment variables (or a 
 # 1. Copy the example environment file
 cp .env.example .env
 
-# 2. Edit .env and fill in only the providers you need
+# 2. Edit .env and fill in the providers you want to use
 # 3. (Optional) Copy and edit the structured config
 cp config/llm-config.example.yaml config/llm-config.yaml
 ```
 
 Add `.env` and `config/llm-config.yaml` to `.gitignore` if they are not already present.
 
+**Recommendation**: Configure at least one provider before generating videos or using grounded chat. The generator console can test your keys.
+
 ## Provider Options
 
-### 1. Gemini API (Google AI Studio)
+### 1. Gemini API (Google AI Studio) — Cloud API Key
 
 - Obtain a key: https://aistudio.google.com/app/apikey
 - Set in `.env`:
@@ -67,6 +76,25 @@ Enable the Vertex AI API on the project and grant the account the `Vertex AI Use
 
 When `GOOGLE_GENAI_USE_VERTEXAI=true` (or the equivalent flag in code), the Google Gen AI SDK routes requests to Vertex AI instead of the Gemini Developer API.
 
+### 4. OpenAI / ChatGPT API
+
+- Obtain a key: https://platform.openai.com/api-keys
+- Set in `.env`:
+  ```bash
+  OPENAI_API_KEY=sk-your-key-here
+  ```
+- Works with the official OpenAI Python SDK and any OpenAI-compatible client.
+- Default model in the example config: `gpt-4o`.
+
+### 5. Anthropic Claude API
+
+- Obtain a key: https://console.anthropic.com/
+- Set in `.env`:
+  ```bash
+  ANTHROPIC_API_KEY=sk-ant-your-key-here
+  ```
+- Default model in the example config: `claude-3-5-sonnet-20241022`.
+
 ## Structured Config (`config/llm-config.yaml`)
 
 The example YAML lets you:
@@ -78,7 +106,38 @@ The example YAML lets you:
 
 Scripts and agents can load this file (or the environment variables directly) to decide which client to instantiate.
 
+## Testing Your Configuration
+
+The generator console (`python3 scripts/generator_server.py`) includes an LLM backend check:
+
+- Open http://localhost:8765
+- Go to the Setup step
+- Use the **LLM Backend Configuration** card to select a provider and test the key
+- The backend validates presence of the key and returns a clear success or error message
+
+You can also call the status endpoint directly:
+
+```bash
+curl http://localhost:8765/api/status
+```
+
+It reports which providers have keys configured.
+
 ## Minimal Python Snippets
+
+**OpenAI / ChatGPT:**
+
+```python
+import os
+from openai import OpenAI
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[{"role": "user", "content": "Explain the Knowledge-to-Experience harness in one sentence."}]
+)
+print(response.choices[0].message.content)
+```
 
 **Grok (xAI SDK):**
 
@@ -87,7 +146,6 @@ import os
 from xai_sdk import Client
 
 client = Client(api_key=os.getenv("XAI_API_KEY"))
-# or simply Client() if the env var is set
 ```
 
 **Gemini / Vertex (google-genai):**
@@ -111,6 +169,7 @@ print(response.text)
 - Prefer ADC or short-lived credentials over long-lived keys when possible.
 - Rotate keys periodically.
 - The harness itself does not store or transmit credentials; they remain on the machine or in the environment where generation runs.
+- Keys entered in the generator UI are used only for the current session test and are not persisted by the server.
 
 ## Related Docs
 
