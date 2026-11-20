@@ -1,0 +1,6 @@
+fastmcp>=2.0.0
+httpx>=0.27.0
+pdfplumber
+python-pptx
+python-dotenv
+# ffmpeg is installed via system package in Docker or host
