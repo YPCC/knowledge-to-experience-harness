@@ -35,6 +35,26 @@ Outputs appear in `generated/`.
 
 ---
 
+## Cloud Plugin (MCP)
+
+A cloud-ready Model Context Protocol plugin is available in `cloud-plugin/`.
+
+Give it any source (GitHub URL, paper, document text) and an optional instruction describing the videos you want. By default it generates **Executive Overview** and **Technical Deep Dive** videos.
+
+```bash
+# Local MCP (stdio)
+pip install -r cloud-plugin/requirements.txt
+python cloud-plugin/server.py
+
+# Or cloud / HTTP
+docker build -f cloud-plugin/Dockerfile -t k2e-cloud-plugin .
+docker run -p 8000:8000 -v $(pwd)/generated:/data/generated k2e-cloud-plugin
+```
+
+See [cloud-plugin/README.md](cloud-plugin/README.md) for full usage, MCP client config, and tools.
+
+---
+
 ## Detailed Steps
 
 ### 1. Run the setup script
@@ -131,6 +151,7 @@ generated/
 | `scripts/generator_server.py` | Local backend for the generator console |
 | `generator-ui/` | McKinsey-style web UI (served by the backend) |
 | `platform/` | React consumption experience |
+| `cloud-plugin/` | Cloud-ready MCP plugin (executive + technical videos by default) |
 | `docs/` | Skills, ingestion notes, evaluation framework, source plans |
 | `docs/skills/` | Reusable skill documents (voice, visual-style, tagging) |
 | `skills/open-code-review/` | Code-review skill for any Git repository |
@@ -205,6 +226,7 @@ Implemented in this update:
 - Consumption platform loads from `generated/` when the backend is running (falls back to static `videos.json`)
 - YouTube publish path with config-based credentials (`scripts/youtube_publish.py`, `config/youtube.example.json`, `docs/youtube-config.md`)
 - Full LLM backend support (Gemini Cloud API key, Grok, Vertex AI ADC, OpenAI/ChatGPT, Claude) with configuration testing and clear error messages in the generator UI
+- **Cloud Plugin**: MCP server + Dockerfile in `cloud-plugin/` that accepts any source + instruction and defaults to executive + technical videos
 
 Remaining:
 
