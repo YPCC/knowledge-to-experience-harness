@@ -147,3 +147,13 @@ Records each major run of the Knowledge-to-Experience Harness.
   - Updated root README with a dedicated **Showcase: SemRep Multi-Source Example** section that links to the guide and the candidate plan.
   - Added the guide to the repository structure listing and Next Steps.
 - **Notes**: Users can now follow the exact process used for the SemRep example on any new combination of sources.
+
+## 2026-11-20 — Cloud Plugin (MCP Server)
+
+- **Actions**:
+  - Created `cloud-plugin/` directory containing a FastMCP server (`server.py`), Dockerfile, requirements, and README.
+  - The plugin accepts any source (GitHub URL, paper, document text) plus an optional instruction prompt.
+  - Defaults to Executive Overview + Technical Deep Dive videos; supports keywords for other types (dialogue, walkthrough, etc.).
+  - Reuses existing `scripts/generation_stages.py` and `scripts/evaluation.py`.
+  - Updated root README with a Cloud Plugin section, added the directory to the project structure table, and noted it in Next Steps.
+- **Notes**: Designed for local MCP clients (stdio) or cloud deployment (HTTP/SSE via Docker). Artifacts written to a configurable output directory.
